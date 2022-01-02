@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.server.model.mapper.UserMapper">
+
+    <!-- 当数据库中的字段信息与对象的属性不一致时需要通过resultMap来映射,即将不同表合并成一张 -->
+    <resultMap type="com.server.model.pojo.UserInfo" id="BaseInfoMap" autoMapping="true">
+        <result property="mId" column="uId"/>
+        <result property="mImage" column="uImage"/>
+        <result property="mName" column="uName"/>
+        <result property="mPassword" column="uPassword"/>
+        <result property="mSex" column="uSex"/>
+        <result property="mAccount" column="uAccount"/>
+        <result property="mPhone" column="uPhone"/>
+        <result property="mEmail" column="uEmail"/>
+    </resultMap>
+
+    <select id="getUser" parameterType="String" resultMap="BaseInfoMap">
+        select * from usertable where uAccount=#{account}
+    </select>
+
+    <select id="getQuery" resultMap="BaseInfoMap">
+        select * from usertable where uId=1
+    </select>
+
+</mapper>
