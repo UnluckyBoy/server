@@ -4,6 +4,8 @@ import com.server.model.pojo.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 /**
  * Mapper接口
  */
@@ -11,5 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository //将mapper交由spring容齐管理
 public interface UserMapper {
     public UserInfo getUser(String account);
+    public UserInfo login(Map<String,String> map);
     public UserInfo getQuery();
 }

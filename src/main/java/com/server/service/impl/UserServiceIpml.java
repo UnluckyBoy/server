@@ -6,6 +6,8 @@ import com.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service("UserService")
 public class UserServiceIpml implements UserService {
 
@@ -15,6 +17,11 @@ public class UserServiceIpml implements UserService {
     @Override
     public UserInfo getUser(String account) {
         return userMapper.getUser(account);
+    }
+
+    @Override
+    public UserInfo login(Map<String,String> map) {
+        return userMapper.login(map);
     }
 
     @Override

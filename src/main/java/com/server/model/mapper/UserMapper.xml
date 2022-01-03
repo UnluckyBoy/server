@@ -18,6 +18,12 @@
 
     <select id="getUser" parameterType="String" resultMap="BaseInfoMap">
         select * from usertable where uAccount=#{account}
+        <!--
+        select * from usertable where uAccount=#{account} and uPassword=#{password}
+        -->
+    </select>
+    <select id="login" parameterType="java.util.HashMap" resultMap="BaseInfoMap">
+        select * from usertable where uAccount=#{account} and uPassword=#{password}
     </select>
 
     <select id="getQuery" resultMap="BaseInfoMap">
