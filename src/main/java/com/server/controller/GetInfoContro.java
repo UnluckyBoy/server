@@ -88,7 +88,7 @@ public class GetInfoContro {
     }
 
     @RequestMapping("/upUserInfo")
-    public Map UpUserInfo(){
+    public Map Register(){
 
         return null;
     }

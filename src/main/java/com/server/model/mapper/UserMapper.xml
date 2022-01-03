@@ -18,13 +18,14 @@
 
     <select id="getUser" parameterType="String" resultMap="BaseInfoMap">
         select * from usertable where uAccount=#{account}
-        <!--
-        select * from usertable where uAccount=#{account} and uPassword=#{password}
-        -->
     </select>
     <select id="login" parameterType="java.util.HashMap" resultMap="BaseInfoMap">
         select * from usertable where uAccount=#{account} and uPassword=#{password}
     </select>
+
+    <insert id="register" parameterType="java.util.HashMap">
+        insert into usertable (uName,uAccount,uPassword) values (#{name},#{account},#{password})
+    </insert>
 
     <select id="getQuery" resultMap="BaseInfoMap">
         select * from usertable where uId=1
