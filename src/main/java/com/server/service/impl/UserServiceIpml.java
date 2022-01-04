@@ -15,8 +15,8 @@ public class UserServiceIpml implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public UserInfo getUser(String account) {
-        return userMapper.getUser(account);
+    public UserInfo regiQuery(String account) {
+        return userMapper.regiQuery(account);
     }
 
     @Override
@@ -25,8 +25,7 @@ public class UserServiceIpml implements UserService {
     }
 
     @Override
-    public UserInfo getQuery() {
-
-        return userMapper.getQuery();
+    public boolean register(Map<String, String> map) {
+        return userMapper.register(map);
     }
 }

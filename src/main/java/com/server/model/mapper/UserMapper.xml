@@ -16,7 +16,7 @@
         <result property="mEmail" column="uEmail"/>
     </resultMap>
 
-    <select id="getUser" parameterType="String" resultMap="BaseInfoMap">
+    <select id="regiQuery" parameterType="String" resultMap="BaseInfoMap">
         select * from usertable where uAccount=#{account}
     </select>
     <select id="login" parameterType="java.util.HashMap" resultMap="BaseInfoMap">
@@ -24,11 +24,7 @@
     </select>
 
     <insert id="register" parameterType="java.util.HashMap">
-        insert into usertable (uName,uAccount,uPassword) values (#{name},#{account},#{password})
+        insert into usertable
+            (uImage,uName,uAccount,uPassword,uSex) values (#{image},#{name},#{account},#{password},#{sex})
     </insert>
-
-    <select id="getQuery" resultMap="BaseInfoMap">
-        select * from usertable where uId=1
-    </select>
-
 </mapper>

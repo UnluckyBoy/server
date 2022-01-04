@@ -6,7 +6,7 @@ import java.util.Map;
 
 @Service
 public interface UserService {
-    public UserInfo getUser(String account);
+    public UserInfo regiQuery(String account);
     public UserInfo login(Map<String,String> map);
-    public UserInfo getQuery();
+    public boolean register(Map<String,String> map);
 }

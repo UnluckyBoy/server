@@ -12,7 +12,7 @@ import java.util.Map;
 @Mapper //告诉springboot这是一个mybatis的mapper类
 @Repository //将mapper交由spring容齐管理
 public interface UserMapper {
-    public UserInfo getUser(String account);
+    public UserInfo regiQuery(String account);
     public UserInfo login(Map<String,String> map);
-    public UserInfo getQuery();
+    public boolean register(Map<String,String> map);
 }
