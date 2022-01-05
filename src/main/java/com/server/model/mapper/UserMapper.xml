@@ -17,14 +17,14 @@
     </resultMap>
 
     <select id="regiQuery" parameterType="String" resultMap="BaseInfoMap">
-        select * from usertable where uAccount=#{account}
+        select * from service_user_info where uAccount=#{account}
     </select>
     <select id="login" parameterType="java.util.HashMap" resultMap="BaseInfoMap">
-        select * from usertable where uAccount=#{account} and uPassword=#{password}
+        select * from service_user_info where uAccount=#{account} and uPassword=#{password}
     </select>
 
     <insert id="register" parameterType="java.util.HashMap">
-        insert into usertable
+        insert into service_user_info
             (uImage,uName,uAccount,uPassword,uSex) values (#{image},#{name},#{account},#{password},#{sex})
     </insert>
 </mapper>

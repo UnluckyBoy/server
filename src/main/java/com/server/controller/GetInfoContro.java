@@ -171,6 +171,11 @@ public class GetInfoContro {
         return resultMap;
     }
 
+    /**
+     * 测试加密
+     * @param password
+     * @return
+     */
     @RequestMapping("/test")
     public Map Test(@RequestParam String password){
 
