@@ -83,6 +83,7 @@ public class GetInfoContro {
                 redisTemplate.expire(account,5, TimeUnit.MINUTES);
             }catch (Exception e){
                 System.out.println("查询异常——mUser is:"+e.getMessage());
+                resultMap.put("result","error");
             }
         }
 
