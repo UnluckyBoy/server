@@ -181,26 +181,6 @@ public class GetInfoContro {
     public Map Test(@RequestParam String password){
 
         Map<String,String> resultMap=new HashMap<>();
-        /*
-        Map<String,String> mUserMap=new HashMap<String, String>();
-        mUserMap.put("account",account);
-        mUserMap.put("password",password);
-        try {
-            mUser=userService.login(mUserMap);
-
-            resultMap.put("id",String.valueOf(mUser.getmId()));
-            resultMap.put("image",mUser.getmImage());
-            resultMap.put("name",mUser.getmName());
-            resultMap.put("account",mUser.getmAcount());
-            resultMap.put("password",mUser.getmPassword());
-            resultMap.put("sex",mUser.getmSex());
-            resultMap.put("phone",mUser.getmPhone());
-            resultMap.put("email",mUser.getmEmail());
-
-        }catch (Exception e){
-            System.out.println("mUser is null");
-        }
-         */
         //对密码加密
         String mEncryPwd = Pwd3DESUtil.encode3Des(PASSWORD_EncryKEY, password);
         System.out.println("加密前：\n"+password+"\n加密后：\n"+mEncryPwd);
