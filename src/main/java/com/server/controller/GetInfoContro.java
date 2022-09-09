@@ -56,6 +56,15 @@ public class GetInfoContro {
         Map<String,String> resultMap=new HashMap<>();
         Map<String,String> requestMap=new HashMap<String, String>();
 
+        /**
+         * try {
+         * 			String StringtoKey=new String(Key.getBytes("iso-8859-1"), "utf-8");//中文字符转换
+         * 			searchList=backService.searchBook(StringtoKey);
+         *                } catch (UnsupportedEncodingException e) {
+         * 			e.printStackTrace();
+         *        }
+         */
+
         requestMap.put("account",account);
         //对密码解密
         String mEncryPwd = Pwd3DESUtil.encode3Des(PASSWORD_EncryKEY, password);
