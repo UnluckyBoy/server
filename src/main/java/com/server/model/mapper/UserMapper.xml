@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.server.model.mapper.UserMapper">
 
-    <!-- 当数据库中的字段信息与对象的属性不一致时需要通过resultMap来映射,即将不同表合并成一张 -->
+    <!-- ***当数据库中的字段信息与Bean对象的属性不一致时需要通过resultMap来映射,防止异常*** -->
     <resultMap type="com.server.model.pojo.UserInfo" id="BaseInfoMap" autoMapping="true">
         <result property="mId" column="uId"/>
         <result property="mImage" column="uImage"/>
@@ -17,10 +17,39 @@
     </resultMap>
 
     <select id="regiQuery" parameterType="String" resultMap="BaseInfoMap">
-        select * from service_user_info where uAccount=#{account}
+        select uId,
+               uImage,
+               uName,
+               uPassword,
+               uSex,
+               uAccount,
+               uPhone,
+               uEmail
+        from service_user_info
+        <where>
+            <if test="account!=null">
+                uAccount=#{account}
+            </if>
+        </where>
     </select>
     <select id="login" parameterType="java.util.HashMap" resultMap="BaseInfoMap">
-        select * from service_user_info where uAccount=#{account} and uPassword=#{password}
+        select uId,
+               uImage,
+               uName,
+               uPassword,
+               uSex,
+               uAccount,
+               uPhone,
+               uEmail
+        from service_user_info
+        <where>
+            <if test="account!=null">
+                uAccount=#{account,jdbcType=VARCHAR}
+            </if>
+            <if test="password!=null">
+                and uPassword=#{password,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
 
     <insert id="register" parameterType="java.util.HashMap">

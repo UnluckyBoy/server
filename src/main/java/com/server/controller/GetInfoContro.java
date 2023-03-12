@@ -35,13 +35,13 @@ public class GetInfoContro {
     @Autowired
     private UserService userService;
 
-    //在RedisConfig文件中配置了redisTemplate的序列化之后， 客户端也能正确显示键值对了
+    //在RedisConfig文件中配置了redisTemplate的序列化之后， 客户端也能正确显示键值对
     @Autowired
     private RedisTemplate redisTemplate;
 
 
     private UserInfo mUser;
-    private static String PASSWORD_EncryKEY = "EncryptionKey_By-WuMing";//自定义密钥
+    private static String PASSWORD_EncryKEY = "EncryptionKey_By-WuMing";//自定义密钥:EncryptionKey_By-WuMing
     private static String mHandPath="/backserver/userImage/default.png";//默认头像地址
 
     /**
@@ -70,6 +70,10 @@ public class GetInfoContro {
         String mEncryPwd = Pwd3DESUtil.encode3Des(PASSWORD_EncryKEY, password);
         requestMap.put("password",mEncryPwd);
 
+        /**
+         * 查询缓存是否存在
+         * 否则查询数据库，写入Redis缓存
+         */
         BoundHashOperations hashOps = redisTemplate.boundHashOps(account);
         if(hashOps.entries().size()>0){
             //System.out.println("Redis not null");
@@ -87,7 +91,7 @@ public class GetInfoContro {
                 resultMap.put("phone",mUser.getmPhone());
                 resultMap.put("email",mUser.getmEmail());
 
-                //System.out.println("__写入Key："+acount);
+                //System.out.println("__写入Redis缓存Key："+acount);
                 redisTemplate.opsForHash().putAll(account,resultMap);//写入Redis
                 redisTemplate.expire(account,5, TimeUnit.MINUTES);
             }catch (Exception e){
@@ -103,8 +107,8 @@ public class GetInfoContro {
     /**
      * 注册接口
      * @param name
-     * @param account
-     * @param password
+     * @param account   账户
+     * @param password  密码
      * @return
      */
     @RequestMapping("/register")
@@ -154,7 +158,7 @@ public class GetInfoContro {
 
     /**
      * 注册校验、账户获取信息
-     * @param account
+     * @param account 账户信息
      * @return
      */
     @RequestMapping("/queryinfo")

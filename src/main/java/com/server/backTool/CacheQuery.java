@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.util.Map;
 
 public class CacheQuery {
-    //在RedisConfig文件中配置了redisTemplate的序列化之后， 客户端也能正确显示键值对了
+    //在RedisConfig文件中配置了redisTemplate的序列化之后， 客户端正确显示键值对
     @Autowired
     private RedisTemplate redisTemplate;
 
