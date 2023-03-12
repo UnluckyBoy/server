@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -41,6 +42,7 @@ public class GetInfoContro {
 
 
     private UserInfo mUser;
+    private List<UserInfo> mListUser;
     private static String PASSWORD_EncryKEY = "EncryptionKey_By-WuMing";//自定义密钥:EncryptionKey_By-WuMing
     private static String mHandPath="/backserver/userImage/default.png";//默认头像地址
 
@@ -183,6 +185,55 @@ public class GetInfoContro {
             resultMap.put("result","UnRegister");
         }
         return resultMap;
+    }
+
+    @RequestMapping("/fuzzyQuery")
+    public List<UserInfo> FuzzyQuery(@RequestParam String name){
+//        Map<String,String> resultMap=new HashMap<>();
+//        try{
+//            mListUser=userService.fuzzyQuery(name);
+//            if(!(mListUser.equals(null))){
+//                //表示账户已注册
+//                resultMap.put("id",String.valueOf(mUser.getmId()));
+//                resultMap.put("image",mUser.getmImage());
+//                resultMap.put("name",mUser.getmName());
+//                resultMap.put("account",mUser.getmAcount());
+//                resultMap.put("password",mUser.getmPassword());
+//                resultMap.put("sex",mUser.getmSex());
+//                resultMap.put("phone",mUser.getmPhone());
+//                resultMap.put("email",mUser.getmEmail());
+//            }else
+//                resultMap.put("result","Query_error");
+//        }catch (Exception e){
+//            System.out.println("查询异常——mUser is:"+e.getMessage());
+//            resultMap.put("result","error");
+//        }
+
+        List<UserInfo> mList=userService.fuzzyQuery(name);
+        //System.out.println(mList.get(0));
+
+//        Map<String,String> resultMap=new HashMap<>();
+//        try{
+//            if(mList.size()>0){
+//                for(UserInfo mUsers:mList){
+//                    //System.out.println(s);
+//                    resultMap.put("id",String.valueOf(mUsers.getmId()));
+//                    resultMap.put("image",mUsers.getmImage());
+//                    resultMap.put("name",mUsers.getmName());
+//                    resultMap.put("account",mUsers.getmAcount());
+//                    resultMap.put("password",mUsers.getmPassword());
+//                    resultMap.put("sex",mUsers.getmSex());
+//                    resultMap.put("phone",mUsers.getmPhone());
+//                    resultMap.put("email",mUsers.getmEmail());
+//                }
+//            }else{
+//                resultMap.put("result","Query_error");
+//            }
+//        }catch (Exception e){
+//            System.out.println("查询异常——mUser is:"+e.getMessage());
+//            resultMap.put("result","error");
+//        }
+        return mList;
     }
 
     /**

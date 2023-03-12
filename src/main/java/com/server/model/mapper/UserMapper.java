@@ -4,6 +4,7 @@ import com.server.model.pojo.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,4 +16,5 @@ public interface UserMapper {
     public UserInfo regiQuery(String account);
     public UserInfo login(Map<String,String> map);
     public boolean register(Map<String,String> map);
+    public List<UserInfo> fuzzyQuery(String name);
 }

@@ -51,6 +51,23 @@
             </if>
         </where>
     </select>
+    
+    <select id="fuzzyQuery" parameterType="String" resultMap="BaseInfoMap">
+        select uId,
+               uImage,
+               uName,
+               uPassword,
+               uSex,
+               uAccount,
+               uPhone,
+               uEmail
+        from service_user_info
+        <where>
+            <if test="name!=null">
+                uName LIKE CONCAT(CONCAT('%', #{name}),'%')
+            </if>
+        </where>
+    </select>
 
     <insert id="register" parameterType="java.util.HashMap">
         insert into service_user_info

@@ -6,6 +6,7 @@ import com.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service("UserService")
@@ -27,5 +28,10 @@ public class UserServiceIpml implements UserService {
     @Override
     public boolean register(Map<String, String> map) {
         return userMapper.register(map);
+    }
+
+    @Override
+    public List<UserInfo> fuzzyQuery(String name) {
+        return userMapper.fuzzyQuery(name);
     }
 }
