@@ -26,7 +26,7 @@ import java.util.Map;
 @RequestMapping("/MatrixGPT")
 public class MatrixGPTClass {
 
-    private static final String mAPI_KEY= "Bearer API-Key";//API-Key
+    private static final String mAPI_KEY= "Bearer API-KEY";//API-Key
     /**
      *url
      * 对话:https://api.openai.com/v1/chat/completions
