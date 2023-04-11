@@ -83,6 +83,7 @@ public class GetInfoContro {
             //System.out.println("Redis is null");
             try{
                 mUser=userService.login(requestMap);
+                resultMap.put("result","success");
                 resultMap.put("id",String.valueOf(mUser.getmId()));
                 resultMap.put("image",mUser.getmImage());
                 resultMap.put("name",mUser.getmName());
@@ -134,6 +135,7 @@ public class GetInfoContro {
                 System.out.println("注册成功:"+regKey);
                 try{
                     mUser=userService.regiQuery(account);
+                    resultMap.put("result","success");
                     resultMap.put("id",String.valueOf(mUser.getmId()));
                     resultMap.put("image",mUser.getmImage());
                     resultMap.put("name",mUser.getmName());
@@ -149,6 +151,7 @@ public class GetInfoContro {
                     redisTemplate.expire(account,5, TimeUnit.MINUTES);
                 }catch (Exception e){
                     System.out.println("查询异常——mUser is:"+e.getMessage());
+                    resultMap.put("result","false");
                 }
             }
             return resultMap;
