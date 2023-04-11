@@ -7,6 +7,7 @@ import cn.hutool.json.JSONUtil;
 import com.server.backTool.JsonUtils;
 import com.server.model.pojo.GptRequestBody.ChatBody;
 import com.server.model.pojo.GptRequestBody.CreateImageBody;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -21,6 +22,7 @@ import java.util.Map;
  * @Date 2023/4/10 0010 20:10
  */
 public class GptTool {
+    //国内需要代理
     private static Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 1080));
     private static String apiKey = "Bearer 你的API-KEY";
 

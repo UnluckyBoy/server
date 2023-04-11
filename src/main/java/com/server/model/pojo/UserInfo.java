@@ -11,6 +11,15 @@ public class UserInfo implements Serializable {
     private String mAccount;
     private String mPhone;
     private String mEmail;
+    private int mGptNum;
+
+    public int getmGptNum() {
+        return mGptNum;
+    }
+
+    public void setmGptNum(int mGptNum) {
+        this.mGptNum = mGptNum;
+    }
 
     public int getmId() {
         return mId;
@@ -52,11 +61,11 @@ public class UserInfo implements Serializable {
         this.mSex = mSex;
     }
 
-    public String getmAcount() {
+    public String getmAccount() {
         return mAccount;
     }
 
-    public void setmAcount(String mAcount) {
+    public void setmAccount(String mAcount) {
         this.mAccount = mAcount;
     }
 

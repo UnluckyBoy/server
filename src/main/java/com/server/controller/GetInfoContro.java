@@ -86,11 +86,12 @@ public class GetInfoContro {
                 resultMap.put("id",String.valueOf(mUser.getmId()));
                 resultMap.put("image",mUser.getmImage());
                 resultMap.put("name",mUser.getmName());
-                resultMap.put("account",mUser.getmAcount());
+                resultMap.put("account",mUser.getmAccount());
                 resultMap.put("password",mUser.getmPassword());
                 resultMap.put("sex",mUser.getmSex());
                 resultMap.put("phone",mUser.getmPhone());
                 resultMap.put("email",mUser.getmEmail());
+                resultMap.put("mGptNum",String.valueOf(mUser.getmGptNum()));
 
                 //System.out.println("__写入Redis缓存Key："+acount);
                 redisTemplate.opsForHash().putAll(account,resultMap);//写入Redis
@@ -136,11 +137,12 @@ public class GetInfoContro {
                     resultMap.put("id",String.valueOf(mUser.getmId()));
                     resultMap.put("image",mUser.getmImage());
                     resultMap.put("name",mUser.getmName());
-                    resultMap.put("account",mUser.getmAcount());
+                    resultMap.put("account",mUser.getmAccount());
                     resultMap.put("password",mUser.getmPassword());
                     resultMap.put("sex",mUser.getmSex());
                     resultMap.put("phone",mUser.getmPhone());
                     resultMap.put("email",mUser.getmEmail());
+                    resultMap.put("mGptNum",String.valueOf(mUser.getmGptNum()));
 
                     //System.out.println("__写入Key："+acount);
                     redisTemplate.opsForHash().putAll(account,resultMap);//写入Redis
@@ -172,11 +174,12 @@ public class GetInfoContro {
                 resultMap.put("id",String.valueOf(mUser.getmId()));
                 resultMap.put("image",mUser.getmImage());
                 resultMap.put("name",mUser.getmName());
-                resultMap.put("account",mUser.getmAcount());
+                resultMap.put("account",mUser.getmAccount());
                 resultMap.put("password",mUser.getmPassword());
                 resultMap.put("sex",mUser.getmSex());
                 resultMap.put("phone",mUser.getmPhone());
                 resultMap.put("email",mUser.getmEmail());
+                resultMap.put("mGptNum",String.valueOf(mUser.getmGptNum()));
             }else
                 resultMap.put("result","UnRegister");
         }catch (Exception e){
