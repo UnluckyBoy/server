@@ -92,7 +92,8 @@ public class GetInfoContro {
                 resultMap.put("sex",mUser.getmSex());
                 resultMap.put("phone",mUser.getmPhone());
                 resultMap.put("email",mUser.getmEmail());
-                resultMap.put("mGptNum",String.valueOf(mUser.getmGptNum()));
+                resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
+                resultMap.put("level",String.valueOf(mUser.getmLevel()));
 
                 //System.out.println("__写入Redis缓存Key："+acount);
                 redisTemplate.opsForHash().putAll(account,resultMap);//写入Redis
@@ -144,7 +145,8 @@ public class GetInfoContro {
                     resultMap.put("sex",mUser.getmSex());
                     resultMap.put("phone",mUser.getmPhone());
                     resultMap.put("email",mUser.getmEmail());
-                    resultMap.put("mGptNum",String.valueOf(mUser.getmGptNum()));
+                    resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
+                    resultMap.put("level",String.valueOf(mUser.getmLevel()));
 
                     //System.out.println("__写入Key："+acount);
                     redisTemplate.opsForHash().putAll(account,resultMap);//写入Redis
@@ -182,7 +184,8 @@ public class GetInfoContro {
                 resultMap.put("sex",mUser.getmSex());
                 resultMap.put("phone",mUser.getmPhone());
                 resultMap.put("email",mUser.getmEmail());
-                resultMap.put("mGptNum",String.valueOf(mUser.getmGptNum()));
+                resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
+                resultMap.put("level",String.valueOf(mUser.getmLevel()));
             }else
                 resultMap.put("result","UnRegister");
         }catch (Exception e){

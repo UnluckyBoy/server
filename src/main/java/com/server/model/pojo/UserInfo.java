@@ -12,6 +12,16 @@ public class UserInfo implements Serializable {
     private String mPhone;
     private String mEmail;
     private int mGptNum;
+    private int mLevel;
+
+    public int getmLevel() {
+        return mLevel;
+    }
+
+    public void setmLevel(int mLevel) {
+        this.mLevel = mLevel;
+    }
+
 
     public int getmGptNum() {
         return mGptNum;

@@ -15,6 +15,7 @@
         <result property="mPhone" column="uPhone"/>
         <result property="mEmail" column="uEmail"/>
         <result property="mGptNum" column="uGptNum"/>
+        <result property="mLevel" column="uLevel"/>
     </resultMap>
 
     <select id="regiQuery" parameterType="String" resultMap="BaseInfoMap">
@@ -26,7 +27,8 @@
                uAccount,
                uPhone,
                uEmail,
-               uGptNum
+               uGptNum,
+               uLevel
         from service_user_info
         <where>
             <if test="account!=null">
@@ -43,7 +45,8 @@
                uAccount,
                uPhone,
                uEmail,
-               uGptNum
+               uGptNum,
+               uLevel
         from service_user_info
         <where>
             <if test="account!=null">
@@ -64,7 +67,8 @@
                uAccount,
                uPhone,
                uEmail,
-               uGptNum
+               uGptNum,
+               uLevel
         from service_user_info
         <where>
             <if test="name!=null">
