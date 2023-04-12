@@ -43,20 +43,38 @@ public class GptTool {
         mChatBody.setMessages(dataList);
 
         JSONObject message = null;
-        String body = HttpRequest.post(url)
-                .setProxy(proxy)
-                .header("Authorization", apiKey)
-                .header("Content-Type", "application/json")
-                .body(JsonUtils.toJson(mChatBody.GetChatMap()))//mChatBody.GetChatMap()返回值为map类型
-                .execute()
-                .body();
-        JSONObject jsonObject = JSONUtil.parseObj(body);
-        JSONArray choices = jsonObject.getJSONArray("choices");
-        JSONObject result = choices.get(0, JSONObject.class, Boolean.TRUE);
-        message = result.getJSONObject("message");
+        try{
+            String body = HttpRequest.post(url)
+                    .setProxy(proxy)
+                    .header("Authorization", apiKey)
+                    .header("Content-Type", "application/json")
+                    .body(JsonUtils.toJson(mChatBody.GetChatMap()))//mChatBody.GetChatMap()返回值为map类型
+                    .execute()
+                    .body();
+            JSONObject jsonObject = JSONUtil.parseObj(body);
+            JSONArray choices = jsonObject.getJSONArray("choices");
+            JSONObject result = choices.get(0, JSONObject.class, Boolean.TRUE);
+            message = result.getJSONObject("message");
 
-        System.out.println(message.getStr("content"));
-        return message.getStr("content");
+            System.out.println(message.getStr("content"));
+            return message.getStr("content");
+        }catch(Exception e){
+            e.getMessage();
+            return "error";
+        }
+//        String body = HttpRequest.post(url)
+//                .setProxy(proxy)
+//                .header("Authorization", apiKey)
+//                .header("Content-Type", "application/json")
+//                .body(JsonUtils.toJson(mChatBody.GetChatMap()))//mChatBody.GetChatMap()返回值为map类型
+//                .execute()
+//                .body();
+//        JSONObject jsonObject = JSONUtil.parseObj(body);
+//        JSONArray choices = jsonObject.getJSONArray("choices");
+//        JSONObject result = choices.get(0, JSONObject.class, Boolean.TRUE);
+//        message = result.getJSONObject("message");
+//        System.out.println(message.getStr("content"));
+//        return message.getStr("content");
     }
 
     public static String CreateImageApi(String content,String url){
@@ -64,19 +82,24 @@ public class GptTool {
         mCreateImageBody.setPrompt(content);
         mCreateImageBody.setSize("1024x1024");
 
-        String message = null;
-        String body = HttpRequest.post(url)
-                .setProxy(proxy)
-                .header("Authorization", apiKey)
-                .header("Content-Type", "application/json")
-                .body(JsonUtils.toJson(mCreateImageBody.GetImageMap()))//mCreateImageBody.GetImageMap()返回值为map类型
-                .execute()
-                .body();
-        JSONObject jsonObject = JSONUtil.parseObj(body);
-        JSONArray data = jsonObject.getJSONArray("data");
-        JSONObject result = data.get(0, JSONObject.class, Boolean.TRUE);
-        message = result.getStr("url");
-        System.out.println(message);
-        return message;
+        try{
+            String message = null;
+            String body = HttpRequest.post(url)
+                    .setProxy(proxy)
+                    .header("Authorization", apiKey)
+                    .header("Content-Type", "application/json")
+                    .body(JsonUtils.toJson(mCreateImageBody.GetImageMap()))//mCreateImageBody.GetImageMap()返回值为map类型
+                    .execute()
+                    .body();
+            JSONObject jsonObject = JSONUtil.parseObj(body);
+            JSONArray data = jsonObject.getJSONArray("data");
+            JSONObject result = data.get(0, JSONObject.class, Boolean.TRUE);
+            message = result.getStr("url");
+            System.out.println(message);
+            return message;
+        }catch (Exception e){
+            e.getMessage();
+            return "error";
+        }
     }
 }
