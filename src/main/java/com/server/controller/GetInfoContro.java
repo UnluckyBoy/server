@@ -74,17 +74,18 @@ public class GetInfoContro {
             //System.out.println("Redis is null");
             try{
                 mUser=userService.login(requestMap);
-                resultMap.put("result","success");
-                resultMap.put("id",String.valueOf(mUser.getmId()));
-                resultMap.put("head",mUser.getmHead());
-                resultMap.put("name",mUser.getmName());
-                resultMap.put("account",mUser.getmAccount());
-                resultMap.put("password",mUser.getmPassword());
-                resultMap.put("sex",mUser.getmSex());
-                resultMap.put("phone",mUser.getmPhone());
-                resultMap.put("email",mUser.getmEmail());
-                resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
-                resultMap.put("level",String.valueOf(mUser.getmLevel()));
+//                resultMap.put("result","success");
+//                resultMap.put("id",String.valueOf(mUser.getmId()));
+//                resultMap.put("head",mUser.getmHead());
+//                resultMap.put("name",mUser.getmName());
+//                resultMap.put("account",mUser.getmAccount());
+//                resultMap.put("password",mUser.getmPassword());
+//                resultMap.put("sex",mUser.getmSex());
+//                resultMap.put("phone",mUser.getmPhone());
+//                resultMap.put("email",mUser.getmEmail());
+//                resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
+//                resultMap.put("level",String.valueOf(mUser.getmLevel()));
+                resultMap=CommonClass2Map("success",mUser);
 
                 //System.out.println("__写入Redis缓存Key："+acount);
                 redisTemplate.opsForHash().putAll(account,resultMap);//写入Redis
@@ -128,17 +129,18 @@ public class GetInfoContro {
                 System.out.println("注册成功:"+regKey);
                 try{
                     mUser=userService.regiQuery(account);
-                    resultMap.put("result","success");
-                    resultMap.put("id",String.valueOf(mUser.getmId()));
-                    resultMap.put("head",mUser.getmHead());
-                    resultMap.put("name",mUser.getmName());
-                    resultMap.put("account",mUser.getmAccount());
-                    resultMap.put("password",mUser.getmPassword());
-                    resultMap.put("sex",mUser.getmSex());
-                    resultMap.put("phone",mUser.getmPhone());
-                    resultMap.put("email",mUser.getmEmail());
-                    resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
-                    resultMap.put("level",String.valueOf(mUser.getmLevel()));
+//                    resultMap.put("result","success");
+//                    resultMap.put("id",String.valueOf(mUser.getmId()));
+//                    resultMap.put("head",mUser.getmHead());
+//                    resultMap.put("name",mUser.getmName());
+//                    resultMap.put("account",mUser.getmAccount());
+//                    resultMap.put("password",mUser.getmPassword());
+//                    resultMap.put("sex",mUser.getmSex());
+//                    resultMap.put("phone",mUser.getmPhone());
+//                    resultMap.put("email",mUser.getmEmail());
+//                    resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
+//                    resultMap.put("level",String.valueOf(mUser.getmLevel()));
+                    resultMap=CommonClass2Map("success",mUser);
 
                     //System.out.println("__写入Key："+acount);
                     redisTemplate.opsForHash().putAll(account,resultMap);//写入Redis
@@ -196,58 +198,59 @@ public class GetInfoContro {
     @RequestMapping("/doGptTrans")
     public Map UpGptNum(@RequestParam("account") String account){
         Map<String,Object> resultMap=new HashMap();
-        try {
-            mUser=userService.regiQuery(account);
-            int curGptNum=mUser.getmGptNum();
-            if(curGptNum<=0){
-                /**已没有次数**/
-                resultMap.put("result","NullPermission");
-                resultMap.put("id",String.valueOf(mUser.getmId()));
-                resultMap.put("head",mUser.getmHead());
-                resultMap.put("name",mUser.getmName());
-                resultMap.put("account",mUser.getmAccount());
-                resultMap.put("password",mUser.getmPassword());
-                resultMap.put("sex",mUser.getmSex());
-                resultMap.put("phone",mUser.getmPhone());
-                resultMap.put("email",mUser.getmEmail());
-                resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
-                resultMap.put("level",String.valueOf(mUser.getmLevel()));
-                System.out.println("更新返回Map:"+resultMap.toString());
-            }else{
-                UserInfo mNewUserInfo=new UserInfo(
-                        mUser.getmId(),mUser.getmHead(),mUser.getmName(),mUser.getmPassword(),
-                        mUser.getmSex(),mUser.getmAccount(),mUser.getmPhone(),mUser.getmEmail(),
-                        curGptNum-1,mUser.getmLevel());
-
-                boolean upGptnum=userService.upgptnumber(mNewUserInfo);
-                if(upGptnum){
-                    resultMap.put("result","Permission");
-                    resultMap.put("id",String.valueOf(mNewUserInfo.getmId()));
-                    resultMap.put("head",mNewUserInfo.getmHead());
-                    resultMap.put("name",mNewUserInfo.getmName());
-                    resultMap.put("account",mNewUserInfo.getmAccount());
-                    resultMap.put("password",mNewUserInfo.getmPassword());
-                    resultMap.put("sex",mNewUserInfo.getmSex());
-                    resultMap.put("phone",mNewUserInfo.getmPhone());
-                    resultMap.put("email",mNewUserInfo.getmEmail());
-                    resultMap.put("gptNum",String.valueOf(mNewUserInfo.getmGptNum()));
-                    resultMap.put("level",String.valueOf(mNewUserInfo.getmLevel()));
-                    System.out.println("更新返回Map:"+resultMap.toString());
-                }else{
-                    System.out.println("Up异常");
-                    resultMap.put("result","error");
-                    System.out.println("更新返回Map:"+resultMap.toString());
+        UserInfo temp=userService.regiQuery(account);
+        if(temp!=null){
+            Map<String,Object> upMap=new HashMap<>();
+            upMap.put("account",temp.getmAccount());
+            upMap.put("password",temp.getmPassword());
+            upMap.put("gptnum",temp.getmGptNum()-1);
+            if(temp.getmGptNum()>0){
+                try{
+                    boolean upConfirm=userService.upgptnumber(upMap);
+                    if(upConfirm){
+                        UserInfo resultClass=userService.regiQuery(account);
+                        System.out.println("有权限,update成功:");
+                        resultMap=CommonClass2Map("Permission",resultClass);
+                    }else{
+                        /**更新失败**/
+                        System.out.println("有权限,update失败:");
+                        resultMap=CommonClass2Map("error",temp);
+                    }
+                }catch (Exception e){
+                    System.out.println("update异常:"+e.getMessage());
+                    resultMap=CommonClass2Map("error",temp);
                 }
+            }else{
+                System.out.println("没有权限");
+                resultMap=CommonClass2Map("NullPermission",temp);
             }
-        }catch (Exception e){
-            System.out.println("Up异常"+e.getMessage());
-            resultMap.put("result","error");
-            System.out.println("更新返回Map:"+resultMap.toString());
         }
         return resultMap;
     }
 
 
+    /***
+     * 返回公共类方法
+     * @param result
+     * @param temp
+     * @return
+     */
+    public Map CommonClass2Map(String result,UserInfo temp){
+        Map<String,Object> resultMap=new HashMap();
+        resultMap.put("result",result);
+        resultMap.put("id",String.valueOf(temp.getmId()));
+        resultMap.put("head",temp.getmHead());
+        resultMap.put("name",temp.getmName());
+        resultMap.put("account",temp.getmAccount());
+        resultMap.put("password",temp.getmPassword());
+        resultMap.put("sex",temp.getmSex());
+        resultMap.put("phone",temp.getmPhone());
+        resultMap.put("email",temp.getmEmail());
+        resultMap.put("gptNum",String.valueOf(temp.getmGptNum()));
+        resultMap.put("level",String.valueOf(temp.getmLevel()));
+
+        return resultMap;
+    }
 
 
 

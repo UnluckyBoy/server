@@ -17,5 +17,5 @@ public interface UserMapper {
     public UserInfo login(Map<String,String> map);//登录
     public boolean register(Map<String,String> map);//注册
     public List<UserInfo> fuzzyQuery(String name);//昵称查询
-    public boolean upgptnumber(UserInfo mUserInfo) throws Exception;//更新可使用次数
+    public boolean upgptnumber(Map<String,Object> map) throws Exception;//更新可使用次数
 }

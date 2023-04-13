@@ -88,21 +88,20 @@
     </insert>
 
     <!--AI使用次数更新-->
-    <update id="upgptnumber" parameterType="com.server.model.pojo.UserInfo">
-        update server_user_info set uGptNum=#{mGptNum}
-        where uAccount=#{mAccount} and uPassword=#{mPassword}
-<!--       <set >-->
-<!--           <if test="mGptNum>=0">-->
-<!--               uGptNum=#{mGptNum}-->
-<!--           </if>-->
-<!--        </set>-->
-<!--        <where>-->
-<!--            <if test="mAccount!=null">-->
-<!--                uAccount=#{mAccount,jdbcType=VARCHAR}-->
-<!--            </if>-->
-<!--            <if test="mPassword!=null">-->
-<!--                and uPassword=#{mPassword,jdbcType=VARCHAR}-->
-<!--            </if>-->
-<!--        </where>-->
+    <update id="upgptnumber" parameterType="java.util.HashMap">
+        update server_user_info
+       <set >
+           <if test="gptnum>=0">
+               uGptNum=#{gptnum}
+           </if>
+        </set>
+        <where>
+            <if test="account!=null">
+                uAccount=#{account,jdbcType=VARCHAR}
+            </if>
+            <if test="password!=null">
+                and uPassword=#{password,jdbcType=VARCHAR}
+            </if>
+        </where>
     </update>
 </mapper>

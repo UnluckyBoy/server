@@ -11,5 +11,5 @@ public interface UserService {
     public UserInfo login(Map<String,String> map);
     public boolean register(Map<String,String> map);
     public List<UserInfo> fuzzyQuery(String name);
-    public boolean upgptnumber(UserInfo mUserInfo)throws Exception;
+    public boolean upgptnumber(Map<String,Object> map)throws Exception;
 }
