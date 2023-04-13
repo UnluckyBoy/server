@@ -1,5 +1,7 @@
 package com.server.model.pojo;
 
+import org.springframework.stereotype.Repository;
+
 import java.io.Serializable;
 
 public class UserInfo implements Serializable {
@@ -14,21 +16,19 @@ public class UserInfo implements Serializable {
     private int mGptNum;
     private int mLevel;
 
-    public int getmLevel() {
-        return mLevel;
-    }
 
-    public void setmLevel(int mLevel) {
-        this.mLevel = mLevel;
-    }
-
-
-    public int getmGptNum() {
-        return mGptNum;
-    }
-
-    public void setmGptNum(int mGptNum) {
+    public UserInfo(int mId,String mHead,String mName,String mPassword,
+                    String mSex,String mAccount,String mPhone,String mEmail,int mGptNum,int mLevel) {
+        this.mId = mId;
+        this.mHead = mHead;
+        this.mName = mName;
+        this.mPassword = mPassword;
+        this.mSex = mSex;
+        this.mAccount = mAccount;
+        this.mPhone = mPhone;
+        this.mEmail = mEmail;
         this.mGptNum = mGptNum;
+        this.mLevel = mLevel;
     }
 
     public int getmId() {
@@ -75,8 +75,8 @@ public class UserInfo implements Serializable {
         return mAccount;
     }
 
-    public void setmAccount(String mAcount) {
-        this.mAccount = mAcount;
+    public void setmAccount(String mAccount) {
+        this.mAccount = mAccount;
     }
 
     public String getmPhone() {
@@ -93,6 +93,22 @@ public class UserInfo implements Serializable {
 
     public void setmEmail(String mEmail) {
         this.mEmail = mEmail;
+    }
+
+    public int getmGptNum() {
+        return mGptNum;
+    }
+
+    public void setmGptNum(int mGptNum) {
+        this.mGptNum = mGptNum;
+    }
+
+    public int getmLevel() {
+        return mLevel;
+    }
+
+    public void setmLevel(int mLevel) {
+        this.mLevel = mLevel;
     }
 
     @Override

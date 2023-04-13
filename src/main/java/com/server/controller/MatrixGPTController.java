@@ -20,7 +20,7 @@ import java.util.Map;
 public class MatrixGPTController {
 
     @RequestMapping( "/chat")
-    public Map<String,String> Chat(@RequestParam String content) throws IOException {
+    public Map<String,String> Chat(@RequestParam("content") String content) throws IOException {
         String mChatUrl = "https://api.openai.com/v1/chat/completions";
         Map<String,String> resultMap=new HashMap<>();
         String mChatResult=GptTool.ChatApi(content,mChatUrl);
@@ -37,7 +37,7 @@ public class MatrixGPTController {
     }
 
     @RequestMapping( "/createImage")
-    public Map<String,String> CreateImage(@RequestParam String content) throws IOException {
+    public Map<String,String> CreateImage(@RequestParam("content") String content) throws IOException {
         String mImageUrl = "https://api.openai.com/v1/images/generations";
         Map<String,String> resultMap=new HashMap<>();
         String mCreateImageResult=GptTool.CreateImageApi(content,mImageUrl);
@@ -47,6 +47,7 @@ public class MatrixGPTController {
             resultMap.put("result","success");
         }
         resultMap.put("content",mCreateImageResult);
+        System.out.println("返回的ImageMap:\n"+resultMap.toString());
         return resultMap;
     }
 }

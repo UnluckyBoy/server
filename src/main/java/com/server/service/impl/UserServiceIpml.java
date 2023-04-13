@@ -36,7 +36,7 @@ public class UserServiceIpml implements UserService {
     }
 
     @Override
-    public boolean upgptnumber(String account) {
-        return userMapper.upgptnumber(account);
+    public boolean upgptnumber(UserInfo mUserInfo) throws Exception{
+        return userMapper.upgptnumber(mUserInfo);
     }
 }

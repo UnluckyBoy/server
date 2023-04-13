@@ -41,7 +41,7 @@ public class GetInfoContro {
 
 
     private UserInfo mUser;
-    private List<UserInfo> mListUser;
+    //private List<UserInfo> mListUser;
     private static String PASSWORD_EncryKEY = "EncryptionKey_By-WuMing";//自定义密钥:EncryptionKey_By-WuMing
     private static String mHandPath="/backserver/userImage/default.png";//默认头像地址
 
@@ -193,9 +193,58 @@ public class GetInfoContro {
         return mList;
     }
 
+    @RequestMapping("/doGptTrans")
     public Map UpGptNum(@RequestParam("account") String account){
+        Map<String,Object> resultMap=new HashMap();
+        try {
+            mUser=userService.regiQuery(account);
+            int curGptNum=mUser.getmGptNum();
+            if(curGptNum<=0){
+                /**已没有次数**/
+                resultMap.put("result","NullPermission");
+                resultMap.put("id",String.valueOf(mUser.getmId()));
+                resultMap.put("head",mUser.getmHead());
+                resultMap.put("name",mUser.getmName());
+                resultMap.put("account",mUser.getmAccount());
+                resultMap.put("password",mUser.getmPassword());
+                resultMap.put("sex",mUser.getmSex());
+                resultMap.put("phone",mUser.getmPhone());
+                resultMap.put("email",mUser.getmEmail());
+                resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
+                resultMap.put("level",String.valueOf(mUser.getmLevel()));
+                System.out.println("更新返回Map:"+resultMap.toString());
+            }else{
+                UserInfo mNewUserInfo=new UserInfo(
+                        mUser.getmId(),mUser.getmHead(),mUser.getmName(),mUser.getmPassword(),
+                        mUser.getmSex(),mUser.getmAccount(),mUser.getmPhone(),mUser.getmEmail(),
+                        curGptNum-1,mUser.getmLevel());
 
-        return null;
+                boolean upGptnum=userService.upgptnumber(mNewUserInfo);
+                if(upGptnum){
+                    resultMap.put("result","Permission");
+                    resultMap.put("id",String.valueOf(mNewUserInfo.getmId()));
+                    resultMap.put("head",mNewUserInfo.getmHead());
+                    resultMap.put("name",mNewUserInfo.getmName());
+                    resultMap.put("account",mNewUserInfo.getmAccount());
+                    resultMap.put("password",mNewUserInfo.getmPassword());
+                    resultMap.put("sex",mNewUserInfo.getmSex());
+                    resultMap.put("phone",mNewUserInfo.getmPhone());
+                    resultMap.put("email",mNewUserInfo.getmEmail());
+                    resultMap.put("gptNum",String.valueOf(mNewUserInfo.getmGptNum()));
+                    resultMap.put("level",String.valueOf(mNewUserInfo.getmLevel()));
+                    System.out.println("更新返回Map:"+resultMap.toString());
+                }else{
+                    System.out.println("Up异常");
+                    resultMap.put("result","error");
+                    System.out.println("更新返回Map:"+resultMap.toString());
+                }
+            }
+        }catch (Exception e){
+            System.out.println("Up异常"+e.getMessage());
+            resultMap.put("result","error");
+            System.out.println("更新返回Map:"+resultMap.toString());
+        }
+        return resultMap;
     }
 
 
