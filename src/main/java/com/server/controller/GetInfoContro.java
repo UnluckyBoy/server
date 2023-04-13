@@ -76,7 +76,7 @@ public class GetInfoContro {
                 mUser=userService.login(requestMap);
                 resultMap.put("result","success");
                 resultMap.put("id",String.valueOf(mUser.getmId()));
-                resultMap.put("image",mUser.getmImage());
+                resultMap.put("head",mUser.getmHead());
                 resultMap.put("name",mUser.getmName());
                 resultMap.put("account",mUser.getmAccount());
                 resultMap.put("password",mUser.getmPassword());
@@ -113,7 +113,7 @@ public class GetInfoContro {
         Map<String,String> resultMap=new HashMap<>();
         Map<String,String> requestMap=new HashMap<String, String>();
 
-        requestMap.put("image",mHandPath);
+        requestMap.put("head",mHandPath);
         requestMap.put("name",name);
         requestMap.put("account",account);
         requestMap.put("sex","男");
@@ -130,7 +130,7 @@ public class GetInfoContro {
                     mUser=userService.regiQuery(account);
                     resultMap.put("result","success");
                     resultMap.put("id",String.valueOf(mUser.getmId()));
-                    resultMap.put("image",mUser.getmImage());
+                    resultMap.put("head",mUser.getmHead());
                     resultMap.put("name",mUser.getmName());
                     resultMap.put("account",mUser.getmAccount());
                     resultMap.put("password",mUser.getmPassword());
@@ -169,7 +169,7 @@ public class GetInfoContro {
             if(!(mUser.equals(null))){
                 //表示账户已注册
                 resultMap.put("id",String.valueOf(mUser.getmId()));
-                resultMap.put("image",mUser.getmImage());
+                resultMap.put("head",mUser.getmHead());
                 resultMap.put("name",mUser.getmName());
                 resultMap.put("account",mUser.getmAccount());
                 resultMap.put("password",mUser.getmPassword());

@@ -1,0 +1,12 @@
+create table backserver_user_info(
+`uId` bigint(20)  not null auto_increment PRIMARY KEY comment '主键',
+`uHead` varchar(255) DEFAULT '/backserver/userImage/default.png' comment'头像地址',
+`uName` varchar(255) not null DEFAULT '' comment '昵称',
+`uPassword` varchar(255) comment '密码',
+`uSex` varchar(25) DEFAULT '男' comment '性别',
+`uAccount` varchar(255) comment '账户',
+`uPhone` varchar(255) DEFAULT null comment '手机号',
+`uEmail` varchar(255) DEFAULT null comment '邮箱',
+`uGptNum` int(255) not null DEFAULT 2 comment 'GPT使用次数',
+`uLevel` int(1) default 0 not null comment '角色,0为普通用户，1为管理员'
+);

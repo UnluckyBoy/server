@@ -7,7 +7,7 @@
     <!-- ***当数据库中的字段信息与Bean对象的属性不一致时需要通过resultMap来映射,防止异常*** -->
     <resultMap type="com.server.model.pojo.UserInfo" id="BaseInfoMap" autoMapping="true">
         <result property="mId" column="uId"/>
-        <result property="mImage" column="uImage"/>
+        <result property="mHead" column="uHead"/>
         <result property="mName" column="uName"/>
         <result property="mPassword" column="uPassword"/>
         <result property="mSex" column="uSex"/>
@@ -21,7 +21,7 @@
     <!--账号查询-->
     <select id="regiQuery" parameterType="String" resultMap="BaseInfoMap">
         select uId,
-               uImage,
+               uHead,
                uName,
                uPassword,
                uSex,
@@ -30,7 +30,7 @@
                uEmail,
                uGptNum,
                uLevel
-        from service_user_info
+        from server_user_info
         <where>
             <if test="account!=null">
                 uAccount=#{account}
@@ -41,7 +41,7 @@
     <!--登录-->
     <select id="login" parameterType="java.util.HashMap" resultMap="BaseInfoMap">
         select uId,
-               uImage,
+               uHead,
                uName,
                uPassword,
                uSex,
@@ -50,7 +50,7 @@
                uEmail,
                uGptNum,
                uLevel
-        from service_user_info
+        from server_user_info
         <where>
             <if test="account!=null">
                 uAccount=#{account,jdbcType=VARCHAR}
@@ -64,7 +64,7 @@
     <!--昵称搜索-->
     <select id="fuzzyQuery" parameterType="String" resultMap="BaseInfoMap">
         select uId,
-               uImage,
+               uHead,
                uName,
                uPassword,
                uSex,
@@ -73,7 +73,7 @@
                uEmail,
                uGptNum,
                uLevel
-        from service_user_info
+        from server_user_info
         <where>
             <if test="name!=null">
                 uName LIKE CONCAT(CONCAT('%', #{name}),'%')
@@ -83,13 +83,13 @@
 
     <!--注册-->
     <insert id="register" parameterType="java.util.HashMap">
-        insert into service_user_info
-            (uImage,uName,uAccount,uPassword,uSex) values (#{image},#{name},#{account},#{password},#{sex})
+        insert into server_user_info
+            (uHead,uName,uAccount,uPassword,uSex) values (#{head},#{name},#{account},#{password},#{sex})
     </insert>
 
     <!--AI使用次数更新-->
     <update id="upgptnumber" parameterType="String">
-        update service_user_info
+        update server_user_info
        <set >
            <if test="gptnum!=null">
                uGptNum=#{gptnum}

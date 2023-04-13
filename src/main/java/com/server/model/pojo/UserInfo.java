@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserInfo implements Serializable {
     private int mId;
-    private String mImage;
+    private String mHead;
     private String mName;
     private String mPassword;
     private String mSex;
@@ -39,12 +39,12 @@ public class UserInfo implements Serializable {
         this.mId = mId;
     }
 
-    public String getmImage() {
-        return mImage;
+    public String getmHead() {
+        return mHead;
     }
 
-    public void setmImage(String mImage) {
-        this.mImage = mImage;
+    public void setmHead(String mHead) {
+        this.mHead = mHead;
     }
 
     public String getmName() {
@@ -99,7 +99,7 @@ public class UserInfo implements Serializable {
     public String toString() {
         return "UserInfo{" +
                 "mId=" + mId +
-                ", mImage='" + mImage + '\'' +
+                ", mImage='" + mHead + '\'' +
                 ", mName='" + mName + '\'' +
                 ", mPassword='" + mPassword + '\'' +
                 ", mSex='" + mSex + '\'' +

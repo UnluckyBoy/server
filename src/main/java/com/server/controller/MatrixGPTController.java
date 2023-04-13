@@ -23,12 +23,16 @@ public class MatrixGPTController {
     public Map<String,String> Chat(@RequestParam String content) throws IOException {
         String mChatUrl = "https://api.openai.com/v1/chat/completions";
         Map<String,String> resultMap=new HashMap<>();
-        if(GptTool.ChatApi(content,mChatUrl).equals("error")){
+        String mChatResult=GptTool.ChatApi(content,mChatUrl);
+        if(mChatResult.equals("error")){
             resultMap.put("result","error");
+            //resultMap.put("content",mChatResult);
         }else{
             resultMap.put("result","success");
+            //resultMap.put("content",mChatResult);
         }
-        resultMap.put("content",GptTool.ChatApi(content,mChatUrl));
+        resultMap.put("content",mChatResult);
+        System.out.println("返回的map:\n"+resultMap.toString());
         return resultMap;
     }
 
@@ -36,12 +40,13 @@ public class MatrixGPTController {
     public Map<String,String> CreateImage(@RequestParam String content) throws IOException {
         String mImageUrl = "https://api.openai.com/v1/images/generations";
         Map<String,String> resultMap=new HashMap<>();
-        if(GptTool.CreateImageApi(content,mImageUrl).equals("error")){
+        String mCreateImageResult=GptTool.CreateImageApi(content,mImageUrl);
+        if(mCreateImageResult.equals("error")){
             resultMap.put("result","error");
         }else{
             resultMap.put("result","success");
         }
-        resultMap.put("content",GptTool.CreateImageApi(content,mImageUrl));
+        resultMap.put("content",mCreateImageResult);
         return resultMap;
     }
 }
