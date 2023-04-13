@@ -34,4 +34,9 @@ public class UserServiceIpml implements UserService {
     public List<UserInfo> fuzzyQuery(String name) {
         return userMapper.fuzzyQuery(name);
     }
+
+    @Override
+    public boolean upgptnumber(String account) {
+        return userMapper.upgptnumber(account);
+    }
 }

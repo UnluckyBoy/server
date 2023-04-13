@@ -52,19 +52,10 @@ public class GetInfoContro {
      * @return
      */
     @RequestMapping( "/login")
-    public Map Login(@RequestParam String account,@RequestParam String password){
+    public Map Login(@RequestParam("account") String account,@RequestParam("password") String password){
 
         Map<String,String> resultMap=new HashMap<>();
         Map<String,String> requestMap=new HashMap<String, String>();
-
-        /**
-         * try {
-         * 			String StringtoKey=new String(Key.getBytes("iso-8859-1"), "utf-8");//中文字符转换
-         * 			searchList=backService.searchBook(StringtoKey);
-         *                } catch (UnsupportedEncodingException e) {
-         * 			e.printStackTrace();
-         *        }
-         */
 
         requestMap.put("account",account);
         //对密码解密
@@ -116,7 +107,8 @@ public class GetInfoContro {
      * @return
      */
     @RequestMapping("/register")
-    public Map Register(@RequestParam String name,@RequestParam String account,@RequestParam String password){
+    public Map Register(@RequestParam("name") String name,
+                        @RequestParam("account") String account,@RequestParam("password") String password){
         System.out.println("Request_name="+name+"___account="+account+"___password="+password);
         Map<String,String> resultMap=new HashMap<>();
         Map<String,String> requestMap=new HashMap<String, String>();
@@ -170,7 +162,7 @@ public class GetInfoContro {
      * @return
      */
     @RequestMapping("/queryinfo")
-    public Map RegiQuery(@RequestParam String account){
+    public Map RegiQuery(@RequestParam("account") String account){
         Map<String,String> resultMap=new HashMap<>();
         try{
             mUser=userService.regiQuery(account);
@@ -195,54 +187,20 @@ public class GetInfoContro {
         return resultMap;
     }
 
-    @RequestMapping("/fuzzyQuery")
-    public List<UserInfo> FuzzyQuery(@RequestParam String name){
-//        Map<String,String> resultMap=new HashMap<>();
-//        try{
-//            mListUser=userService.fuzzyQuery(name);
-//            if(!(mListUser.equals(null))){
-//                //表示账户已注册
-//                resultMap.put("id",String.valueOf(mUser.getmId()));
-//                resultMap.put("image",mUser.getmImage());
-//                resultMap.put("name",mUser.getmName());
-//                resultMap.put("account",mUser.getmAcount());
-//                resultMap.put("password",mUser.getmPassword());
-//                resultMap.put("sex",mUser.getmSex());
-//                resultMap.put("phone",mUser.getmPhone());
-//                resultMap.put("email",mUser.getmEmail());
-//            }else
-//                resultMap.put("result","Query_error");
-//        }catch (Exception e){
-//            System.out.println("查询异常——mUser is:"+e.getMessage());
-//            resultMap.put("result","error");
-//        }
-
+    @RequestMapping("/fuzzyQuery/name")
+    public List<UserInfo> FuzzyQuery(@RequestParam("name") String name){
         List<UserInfo> mList=userService.fuzzyQuery(name);
-        //System.out.println(mList.get(0));
-
-//        Map<String,String> resultMap=new HashMap<>();
-//        try{
-//            if(mList.size()>0){
-//                for(UserInfo mUsers:mList){
-//                    //System.out.println(s);
-//                    resultMap.put("id",String.valueOf(mUsers.getmId()));
-//                    resultMap.put("image",mUsers.getmImage());
-//                    resultMap.put("name",mUsers.getmName());
-//                    resultMap.put("account",mUsers.getmAcount());
-//                    resultMap.put("password",mUsers.getmPassword());
-//                    resultMap.put("sex",mUsers.getmSex());
-//                    resultMap.put("phone",mUsers.getmPhone());
-//                    resultMap.put("email",mUsers.getmEmail());
-//                }
-//            }else{
-//                resultMap.put("result","Query_error");
-//            }
-//        }catch (Exception e){
-//            System.out.println("查询异常——mUser is:"+e.getMessage());
-//            resultMap.put("result","error");
-//        }
         return mList;
     }
+
+    public Map UpGptNum(@RequestParam("account") String account){
+
+        return null;
+    }
+
+
+
+
 
     /**
      * 测试加密

@@ -13,8 +13,9 @@ import java.util.Map;
 @Mapper //告诉springboot这是一个mybatis的mapper类
 @Repository //将mapper交由spring容齐管理
 public interface UserMapper {
-    public UserInfo regiQuery(String account);
-    public UserInfo login(Map<String,String> map);
-    public boolean register(Map<String,String> map);
-    public List<UserInfo> fuzzyQuery(String name);
+    public UserInfo regiQuery(String account);//查询
+    public UserInfo login(Map<String,String> map);//登录
+    public boolean register(Map<String,String> map);//注册
+    public List<UserInfo> fuzzyQuery(String name);//昵称查询
+    public boolean upgptnumber(String account);//更新可使用次数
 }
