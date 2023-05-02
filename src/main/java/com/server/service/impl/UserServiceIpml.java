@@ -41,7 +41,7 @@ public class UserServiceIpml implements UserService {
     }
 
     @Override
-    public boolean fresh_status(Map<String, Object> map) {
-        return userMapper.fresh_status(map);
+    public boolean fresh_status_ip(Map<String, Object> map) {
+        return userMapper.fresh_status_ip(map);
     }
 }

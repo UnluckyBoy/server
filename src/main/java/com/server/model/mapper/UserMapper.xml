@@ -114,11 +114,14 @@
     </update>
 
     <!--更新登录状态-->
-    <update id="fresh_status" parameterType="java.util.HashMap">
+    <update id="fresh_status_ip" parameterType="java.util.HashMap">
         update server_user_info
         <set >
             <if test="status!=0">
-                uStatus=#{status}
+                uStatus=#{status},
+            </if>
+            <if test="addressIp!=null">
+                uAddressIp=#{addressIp}
             </if>
         </set>
         <where>

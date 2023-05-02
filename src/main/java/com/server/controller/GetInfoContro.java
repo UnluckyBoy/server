@@ -65,11 +65,12 @@ public class GetInfoContro {
         //对密码解密
         String mEncryPwd = Pwd3DESUtil.encode3Des(PASSWORD_EncryKEY, password);
         requestMap.put("password",mEncryPwd);
+        requestMap.put("status",1);
 
         /**显示ip**/
         String currentIp=IPUtils.getIpAddress(request);
         System.out.println("IP:"+currentIp);
-        //requestMap.put()
+        requestMap.put("addressIp",currentIp);
 
         /** 查询缓存是否存在
          * 否则查询数据库，写入Redis缓存
@@ -99,8 +100,12 @@ public class GetInfoContro {
 //                    System.out.println("两次登录ip不一致"+mUser.getmAddressIp()+currentIp);
 //                }
 //            }
-            //boolean login_status=userService.fresh_status(requestMap);
-            resultMap=CommonClass2Map("success",mUser);
+            boolean login_status=userService.fresh_status_ip(requestMap);
+            if(login_status){
+                resultMap=CommonClass2Map("success",mUser);
+            }else{
+                resultMap.put("result","error");
+            }
         }catch (Exception e){
             System.out.println("查询异常——mUser is:"+e.getMessage());
             resultMap.put("result","error");

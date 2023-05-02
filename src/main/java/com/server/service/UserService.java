@@ -12,5 +12,5 @@ public interface UserService {
     public boolean register(Map<String,String> map);
     public List<UserInfo> fuzzyQuery(String name);
     public boolean upgptnumber(Map<String,Object> map)throws Exception;
-    public boolean fresh_status(Map<String,Object> map);//更新登录信息
+    public boolean fresh_status_ip(Map<String,Object> map);//更新登录信息
 }
