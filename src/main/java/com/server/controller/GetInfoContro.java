@@ -1,18 +1,21 @@
 package com.server.controller;
 
 import com.server.backTool.CacheQuery;
+import com.server.backTool.IPUtils;
 import com.server.backTool.Pwd3DESUtil;
 import com.server.model.pojo.UserInfo;
 import com.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,48 +55,55 @@ public class GetInfoContro {
      * @return
      */
     @RequestMapping( "/login")
-    public Map Login(@RequestParam("account") String account,@RequestParam("password") String password){
+    public Map Login(@RequestParam("account") String account, @RequestParam("password") String password,
+                     HttpServletRequest request){
 
-        Map<String,String> resultMap=new HashMap<>();
-        Map<String,String> requestMap=new HashMap<String, String>();
+        Map<String,Object> resultMap=new HashMap<>();
+        Map<String,Object> requestMap=new HashMap<>();
 
         requestMap.put("account",account);
         //对密码解密
         String mEncryPwd = Pwd3DESUtil.encode3Des(PASSWORD_EncryKEY, password);
         requestMap.put("password",mEncryPwd);
 
-        /**
-         * 查询缓存是否存在
-         * 否则查询数据库，写入Redis缓存
-         */
-        BoundHashOperations hashOps = redisTemplate.boundHashOps(account);
-        if(hashOps.entries().size()>0){
-            //System.out.println("Redis not null");
-            resultMap=hashOps.entries();
-        } else{
-            //System.out.println("Redis is null");
-            try{
-                mUser=userService.login(requestMap);
-//                resultMap.put("result","success");
-//                resultMap.put("id",String.valueOf(mUser.getmId()));
-//                resultMap.put("head",mUser.getmHead());
-//                resultMap.put("name",mUser.getmName());
-//                resultMap.put("account",mUser.getmAccount());
-//                resultMap.put("password",mUser.getmPassword());
-//                resultMap.put("sex",mUser.getmSex());
-//                resultMap.put("phone",mUser.getmPhone());
-//                resultMap.put("email",mUser.getmEmail());
-//                resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
-//                resultMap.put("level",String.valueOf(mUser.getmLevel()));
-                resultMap=CommonClass2Map("success",mUser);
+        /**显示ip**/
+        String currentIp=IPUtils.getIpAddress(request);
+        System.out.println("IP:"+currentIp);
+        //requestMap.put()
 
-                //System.out.println("__写入Redis缓存Key："+acount);
-                redisTemplate.opsForHash().putAll(account,resultMap);//写入Redis
-                redisTemplate.expire(account,5, TimeUnit.MINUTES);
-            }catch (Exception e){
-                System.out.println("查询异常——mUser is:"+e.getMessage());
-                resultMap.put("result","error");
-            }
+        /** 查询缓存是否存在
+         * 否则查询数据库，写入Redis缓存
+         * */
+//        BoundHashOperations hashOps = redisTemplate.boundHashOps(account);
+//        if(hashOps.entries().size()>0){
+//            //System.out.println("Redis not null");
+//            resultMap=hashOps.entries();
+//        } else{
+//            //System.out.println("Redis is null");
+//            try{
+//                mUser=userService.login(requestMap);
+//                resultMap=CommonClass2Map("success",mUser);
+//
+//                //System.out.println("__写入Redis缓存Key："+acount);
+//                redisTemplate.opsForHash().putAll(account,resultMap);//写入Redis
+//                redisTemplate.expire(account,5, TimeUnit.MINUTES);
+//            }catch (Exception e){
+//                System.out.println("查询异常——mUser is:"+e.getMessage());
+//                resultMap.put("result","error");
+//            }
+//        }
+        try{
+            mUser=userService.login(requestMap);
+//            if(mUser.getmStatus()!=0){
+//                if(mUser.getmAddressIp()!=currentIp){
+//                    System.out.println("两次登录ip不一致"+mUser.getmAddressIp()+currentIp);
+//                }
+//            }
+            //boolean login_status=userService.fresh_status(requestMap);
+            resultMap=CommonClass2Map("success",mUser);
+        }catch (Exception e){
+            System.out.println("查询异常——mUser is:"+e.getMessage());
+            resultMap.put("result","error");
         }
 
         System.out.println("Server_running_login_Map:\n"+resultMap.toString());
@@ -111,7 +121,7 @@ public class GetInfoContro {
     public Map Register(@RequestParam("name") String name,
                         @RequestParam("account") String account,@RequestParam("password") String password){
         System.out.println("Request_name="+name+"___account="+account+"___password="+password);
-        Map<String,String> resultMap=new HashMap<>();
+        Map<String,Object> resultMap=new HashMap<>();
         Map<String,String> requestMap=new HashMap<String, String>();
 
         requestMap.put("head",mHandPath);
@@ -129,17 +139,6 @@ public class GetInfoContro {
                 System.out.println("注册成功:"+regKey);
                 try{
                     mUser=userService.regiQuery(account);
-//                    resultMap.put("result","success");
-//                    resultMap.put("id",String.valueOf(mUser.getmId()));
-//                    resultMap.put("head",mUser.getmHead());
-//                    resultMap.put("name",mUser.getmName());
-//                    resultMap.put("account",mUser.getmAccount());
-//                    resultMap.put("password",mUser.getmPassword());
-//                    resultMap.put("sex",mUser.getmSex());
-//                    resultMap.put("phone",mUser.getmPhone());
-//                    resultMap.put("email",mUser.getmEmail());
-//                    resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
-//                    resultMap.put("level",String.valueOf(mUser.getmLevel()));
                     resultMap=CommonClass2Map("success",mUser);
 
                     //System.out.println("__写入Key："+acount);
@@ -165,12 +164,12 @@ public class GetInfoContro {
      */
     @RequestMapping("/queryinfo")
     public Map RegiQuery(@RequestParam("account") String account){
-        Map<String,String> resultMap=new HashMap<>();
+        Map<String,Object> resultMap=new HashMap<>();
         try{
             mUser=userService.regiQuery(account);
             if(!(mUser.equals(null))){
                 //表示账户已注册
-                resultMap.put("id",String.valueOf(mUser.getmId()));
+                resultMap.put("id",mUser.getmId());
                 resultMap.put("head",mUser.getmHead());
                 resultMap.put("name",mUser.getmName());
                 resultMap.put("account",mUser.getmAccount());
@@ -178,8 +177,8 @@ public class GetInfoContro {
                 resultMap.put("sex",mUser.getmSex());
                 resultMap.put("phone",mUser.getmPhone());
                 resultMap.put("email",mUser.getmEmail());
-                resultMap.put("gptNum",String.valueOf(mUser.getmGptNum()));
-                resultMap.put("level",String.valueOf(mUser.getmLevel()));
+                resultMap.put("gptNum",mUser.getmGptNum());
+                resultMap.put("level",mUser.getmLevel());
             }else
                 resultMap.put("result","UnRegister");
         }catch (Exception e){
@@ -236,20 +235,22 @@ public class GetInfoContro {
      * @return
      */
     public Map CommonClass2Map(String result,UserInfo temp){
-        Map<String,Object> resultMap=new HashMap();
-        resultMap.put("result",result);
-        resultMap.put("id",String.valueOf(temp.getmId()));
-        resultMap.put("head",temp.getmHead());
-        resultMap.put("name",temp.getmName());
-        resultMap.put("account",temp.getmAccount());
-        resultMap.put("password",temp.getmPassword());
-        resultMap.put("sex",temp.getmSex());
-        resultMap.put("phone",temp.getmPhone());
-        resultMap.put("email",temp.getmEmail());
-        resultMap.put("gptNum",String.valueOf(temp.getmGptNum()));
-        resultMap.put("level",String.valueOf(temp.getmLevel()));
+        Map<String,Object> tempMap=new HashMap();
+        tempMap.put("result",result);
+        tempMap.put("id",temp.getmId());
+        tempMap.put("head",temp.getmHead());
+        tempMap.put("name",temp.getmName());
+        tempMap.put("account",temp.getmAccount());
+        tempMap.put("password",temp.getmPassword());
+        tempMap.put("sex",temp.getmSex());
+        tempMap.put("phone",temp.getmPhone());
+        tempMap.put("email",temp.getmEmail());
+        tempMap.put("gptNum",temp.getmGptNum());
+        tempMap.put("level",temp.getmLevel());
+        tempMap.put("status",temp.getmStatus());
+        tempMap.put("ip",temp.getmAddressIp());
 
-        return resultMap;
+        return tempMap;
     }
 
 

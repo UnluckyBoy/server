@@ -21,7 +21,7 @@ public class UserServiceIpml implements UserService {
     }
 
     @Override
-    public UserInfo login(Map<String,String> map) {
+    public UserInfo login(Map<String,Object> map) {
         return userMapper.login(map);
     }
 
@@ -38,5 +38,10 @@ public class UserServiceIpml implements UserService {
     @Override
     public boolean upgptnumber(Map<String,Object> map) throws Exception{
         return userMapper.upgptnumber(map);
+    }
+
+    @Override
+    public boolean fresh_status(Map<String, Object> map) {
+        return userMapper.fresh_status(map);
     }
 }

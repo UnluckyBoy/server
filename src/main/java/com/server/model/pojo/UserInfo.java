@@ -15,6 +15,8 @@ public class UserInfo implements Serializable {
     private String mEmail;
     private int mGptNum;
     private int mLevel;
+    private int mStatus;
+    private String mAddressIp;
 
 
     public UserInfo(int mId,String mHead,String mName,String mPassword,
@@ -109,6 +111,22 @@ public class UserInfo implements Serializable {
 
     public void setmLevel(int mLevel) {
         this.mLevel = mLevel;
+    }
+
+    public int getmStatus() {
+        return mStatus;
+    }
+
+    public void setmStatus(int mStatus) {
+        this.mStatus = mStatus;
+    }
+
+    public String getmAddressIp() {
+        return mAddressIp;
+    }
+
+    public void setmAddressIp(String mAdressIp) {
+        this.mAddressIp = mAdressIp;
     }
 
     @Override

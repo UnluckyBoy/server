@@ -8,8 +8,9 @@ import java.util.Map;
 @Service
 public interface UserService {
     public UserInfo regiQuery(String account);
-    public UserInfo login(Map<String,String> map);
+    public UserInfo login(Map<String,Object> map);
     public boolean register(Map<String,String> map);
     public List<UserInfo> fuzzyQuery(String name);
     public boolean upgptnumber(Map<String,Object> map)throws Exception;
+    public boolean fresh_status(Map<String,Object> map);//更新登录信息
 }

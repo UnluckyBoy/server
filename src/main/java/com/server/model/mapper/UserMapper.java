@@ -14,8 +14,9 @@ import java.util.Map;
 @Repository //将mapper交由spring容齐管理
 public interface UserMapper {
     public UserInfo regiQuery(String account);//查询
-    public UserInfo login(Map<String,String> map);//登录
+    public UserInfo login(Map<String,Object> map);//登录
     public boolean register(Map<String,String> map);//注册
     public List<UserInfo> fuzzyQuery(String name);//昵称查询
     public boolean upgptnumber(Map<String,Object> map) throws Exception;//更新可使用次数
+    public boolean fresh_status(Map<String,Object> map);//更新登录信息
 }

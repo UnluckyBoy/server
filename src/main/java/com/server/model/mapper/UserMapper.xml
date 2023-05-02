@@ -16,6 +16,8 @@
         <result property="mEmail" column="uEmail"/>
         <result property="mGptNum" column="uGptNum"/>
         <result property="mLevel" column="uLevel"/>
+        <result property="mStatus" column="uStatus"/>
+        <result property="mAddressIp" column="uAddressIp"/>
     </resultMap>
 
     <!--账号查询-->
@@ -29,7 +31,9 @@
                uPhone,
                uEmail,
                uGptNum,
-               uLevel
+               uLevel,
+               uStatus,
+               uAddressIp
         from server_user_info
         <where>
             <if test="account!=null">
@@ -49,7 +53,9 @@
                uPhone,
                uEmail,
                uGptNum,
-               uLevel
+               uLevel,
+               uStatus,
+               uAddressIp
         from server_user_info
         <where>
             <if test="account!=null">
@@ -72,7 +78,9 @@
                uPhone,
                uEmail,
                uGptNum,
-               uLevel
+               uLevel,
+               uStatus,
+               uAddressIp
         from server_user_info
         <where>
             <if test="name!=null">
@@ -94,6 +102,24 @@
            <if test="gptnum>=0">
                uGptNum=#{gptnum}
            </if>
+        </set>
+        <where>
+            <if test="account!=null">
+                uAccount=#{account,jdbcType=VARCHAR}
+            </if>
+            <if test="password!=null">
+                and uPassword=#{password,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </update>
+
+    <!--更新登录状态-->
+    <update id="fresh_status" parameterType="java.util.HashMap">
+        update server_user_info
+        <set >
+            <if test="status!=0">
+                uStatus=#{status}
+            </if>
         </set>
         <where>
             <if test="account!=null">
