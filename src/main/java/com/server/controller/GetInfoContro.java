@@ -95,23 +95,64 @@ public class GetInfoContro {
 //        }
         try{
             mUser=userService.login(requestMap);
-//            if(mUser.getmStatus()!=0){
-//                if(mUser.getmAddressIp()!=currentIp){
-//                    System.out.println("两次登录ip不一致"+mUser.getmAddressIp()+currentIp);
-//                }
-//            }
-            boolean login_status=userService.fresh_status_ip(requestMap);
-            if(login_status){
-                resultMap=CommonClass2Map("success",mUser);
+            if(mUser.getmStatus()!=0){
+                /*
+                if(mUser.getmAddressIp()!=currentIp){
+                    System.out.println("两次登录ip不一致"+mUser.getmAddressIp()+currentIp);
+                }
+                */
+                resultMap.put("result","login_lock");
             }else{
-                resultMap.put("result","error");
+                boolean login_status=userService.fresh_status_login(requestMap);
+                if(login_status){
+                    resultMap=CommonClass2Map("success",mUser);
+                }else{
+                    resultMap.put("result","error");
+                }
             }
         }catch (Exception e){
-            System.out.println("查询异常——mUser is:"+e.getMessage());
+            System.out.println("查询异常:"+e.getMessage());
             resultMap.put("result","error");
         }
 
         System.out.println("Server_running_login_Map:\n"+resultMap.toString());
+        return resultMap;
+    }
+
+    /**
+     * 登出接口
+     * @param account
+     * @param password
+     * @param request
+     * @return
+     */
+    @RequestMapping( "/logout")
+    public Map Logout(@RequestParam("account") String account, @RequestParam("password") String password,
+                      HttpServletRequest request){
+        Map<String,Object> resultMap=new HashMap<>();
+        Map<String,Object> requestMap=new HashMap<>();
+        requestMap.put("account",account);
+        String mEncryPwd = Pwd3DESUtil.encode3Des(PASSWORD_EncryKEY, password);
+        requestMap.put("password",mEncryPwd);
+        requestMap.put("status",0);
+        try{
+            if((userService.infoQuery(requestMap).getmStatus()==1)){
+                boolean logout=userService.fresh_status_logout(requestMap);
+                if(logout){
+                    resultMap.put("result","success");
+                }else{
+                    System.out.println("登出异常:"+logout);
+                    resultMap.put("result","error");
+                }
+            }else{
+                System.out.println("登出异常:尚未登录");
+                resultMap.put("result","error");
+            }
+        }catch (Exception e){
+            System.out.println("登出异常:"+e.getMessage());
+            resultMap.put("result","error");
+        }
+
         return resultMap;
     }
 
@@ -127,7 +168,7 @@ public class GetInfoContro {
                         @RequestParam("account") String account,@RequestParam("password") String password){
         System.out.println("Request_name="+name+"___account="+account+"___password="+password);
         Map<String,Object> resultMap=new HashMap<>();
-        Map<String,String> requestMap=new HashMap<String, String>();
+        Map<String,Object> requestMap=new HashMap<>();
 
         requestMap.put("head",mHandPath);
         requestMap.put("name",name);
@@ -138,12 +179,12 @@ public class GetInfoContro {
         requestMap.put("password",mEncryPwd);
 
         //若未存在，写入数据库返回Json
-        if((userService.regiQuery(account)==null)){
+        if((userService.infoQuery(requestMap)==null)){
             boolean regKey=userService.register(requestMap);
             if(regKey){
                 System.out.println("注册成功:"+regKey);
                 try{
-                    mUser=userService.regiQuery(account);
+                    mUser=userService.infoQuery(requestMap);
                     resultMap=CommonClass2Map("success",mUser);
 
                     //System.out.println("__写入Key："+acount);
@@ -170,8 +211,10 @@ public class GetInfoContro {
     @RequestMapping("/queryinfo")
     public Map RegiQuery(@RequestParam("account") String account){
         Map<String,Object> resultMap=new HashMap<>();
+        Map<String,Object> requestMap=new HashMap<>();
+        requestMap.put("account",account);
         try{
-            mUser=userService.regiQuery(account);
+            mUser=userService.infoQuery(requestMap);
             if(!(mUser.equals(null))){
                 //表示账户已注册
                 resultMap.put("id",mUser.getmId());
@@ -202,7 +245,9 @@ public class GetInfoContro {
     @RequestMapping("/doGptTrans")
     public Map UpGptNum(@RequestParam("account") String account){
         Map<String,Object> resultMap=new HashMap();
-        UserInfo temp=userService.regiQuery(account);
+        Map<String,Object> requestMap=new HashMap<>();
+        requestMap.put("account",account);
+        UserInfo temp=userService.infoQuery(requestMap);
         if(temp!=null){
             Map<String,Object> upMap=new HashMap<>();
             upMap.put("account",temp.getmAccount());
@@ -212,7 +257,7 @@ public class GetInfoContro {
                 try{
                     boolean upConfirm=userService.upgptnumber(upMap);
                     if(upConfirm){
-                        UserInfo resultClass=userService.regiQuery(account);
+                        UserInfo resultClass=userService.infoQuery(requestMap);
                         System.out.println("有权限,update成功:");
                         resultMap=CommonClass2Map("Permission",resultClass);
                     }else{

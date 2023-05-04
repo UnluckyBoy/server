@@ -55,4 +55,6 @@ public class CORSConfiguration extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/getImage/**")
                 .addResourceLocations("file:"+dirPath);//file:E:/MatrixProject/BackResource/
     }
+
+
 }

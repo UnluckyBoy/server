@@ -21,7 +21,7 @@
     </resultMap>
 
     <!--账号查询-->
-    <select id="regiQuery" parameterType="String" resultMap="BaseInfoMap">
+    <select id="infoQuery" parameterType="java.util.HashMap" resultMap="BaseInfoMap">
         select uId,
                uHead,
                uName,
@@ -38,6 +38,9 @@
         <where>
             <if test="account!=null">
                 uAccount=#{account}
+            </if>
+            <if test="password!=null">
+                and uPassword=#{password,jdbcType=VARCHAR}
             </if>
         </where>
     </select>
@@ -114,7 +117,7 @@
     </update>
 
     <!--更新登录状态-->
-    <update id="fresh_status_ip" parameterType="java.util.HashMap">
+    <update id="fresh_status_login" parameterType="java.util.HashMap">
         update server_user_info
         <set >
             <if test="status!=0">
@@ -122,6 +125,24 @@
             </if>
             <if test="addressIp!=null">
                 uAddressIp=#{addressIp}
+            </if>
+        </set>
+        <where>
+            <if test="account!=null">
+                uAccount=#{account,jdbcType=VARCHAR}
+            </if>
+            <if test="password!=null">
+                and uPassword=#{password,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </update>
+
+    <!--登出更新状态-->
+    <update id="fresh_status_logout" parameterType="java.util.HashMap">
+        update  server_user_info
+        <set >
+            <if test="status==0">
+                uStatus=#{status}
             </if>
         </set>
         <where>

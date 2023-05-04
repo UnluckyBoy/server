@@ -16,8 +16,8 @@ public class UserServiceIpml implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public UserInfo regiQuery(String account) {
-        return userMapper.regiQuery(account);
+    public UserInfo infoQuery(Map<String,Object> map) {
+        return userMapper.infoQuery(map);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class UserServiceIpml implements UserService {
     }
 
     @Override
-    public boolean register(Map<String, String> map) {
+    public boolean register(Map<String, Object> map) {
         return userMapper.register(map);
     }
 
@@ -41,7 +41,12 @@ public class UserServiceIpml implements UserService {
     }
 
     @Override
-    public boolean fresh_status_ip(Map<String, Object> map) {
-        return userMapper.fresh_status_ip(map);
+    public boolean fresh_status_login(Map<String, Object> map) {
+        return userMapper.fresh_status_login(map);
+    }
+
+    @Override
+    public boolean fresh_status_logout(Map<String, Object> map) {
+        return userMapper.fresh_status_logout(map);
     }
 }
