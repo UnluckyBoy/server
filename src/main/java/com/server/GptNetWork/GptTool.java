@@ -24,7 +24,7 @@ import java.util.Map;
 public class GptTool {
     //国内需要代理
     private static Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 1080));
-    private static String apiKey = "Bearer 你的API-KEY";
+    private static String apiKey = "Bearer API_KEY";
 
     public static String ChatApi(String content,String url){
 
@@ -49,6 +49,7 @@ public class GptTool {
                     .header("Authorization", apiKey)
                     .header("Content-Type", "application/json")
                     .body(JsonUtils.toJson(mChatBody.GetChatMap()))//mChatBody.GetChatMap()返回值为map类型
+                    .timeout(300000)//超时:5分钟
                     .execute()
                     .body();
             JSONObject jsonObject = JSONUtil.parseObj(body);
@@ -62,19 +63,6 @@ public class GptTool {
             e.getMessage();
             return "error";
         }
-//        String body = HttpRequest.post(url)
-//                .setProxy(proxy)
-//                .header("Authorization", apiKey)
-//                .header("Content-Type", "application/json")
-//                .body(JsonUtils.toJson(mChatBody.GetChatMap()))//mChatBody.GetChatMap()返回值为map类型
-//                .execute()
-//                .body();
-//        JSONObject jsonObject = JSONUtil.parseObj(body);
-//        JSONArray choices = jsonObject.getJSONArray("choices");
-//        JSONObject result = choices.get(0, JSONObject.class, Boolean.TRUE);
-//        message = result.getJSONObject("message");
-//        System.out.println(message.getStr("content"));
-//        return message.getStr("content");
     }
 
     public static String CreateImageApi(String content,String url){
@@ -89,6 +77,7 @@ public class GptTool {
                     .header("Authorization", apiKey)
                     .header("Content-Type", "application/json")
                     .body(JsonUtils.toJson(mCreateImageBody.GetImageMap()))//mCreateImageBody.GetImageMap()返回值为map类型
+                    .timeout(300000)//超时:5分钟
                     .execute()
                     .body();
             JSONObject jsonObject = JSONUtil.parseObj(body);
