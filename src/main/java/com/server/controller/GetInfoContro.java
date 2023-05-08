@@ -146,7 +146,7 @@ public class GetInfoContro {
                 }
             }else{
                 System.out.println("登出异常:尚未登录");
-                resultMap.put("result","error");
+                resultMap.put("result","unlogin");
             }
         }catch (Exception e){
             System.out.println("登出异常:"+e.getMessage());
