@@ -277,6 +277,39 @@ public class GetInfoContro {
         return resultMap;
     }
 
+    @RequestMapping("/update_gpt_num")
+    public Map Update_Gpt_Num(@RequestParam("account") String account){
+
+        Map<String,Object> resultMap=new HashMap();
+        Map<String,Object> requestMap=new HashMap<>();
+        requestMap.put("account",account);
+        UserInfo temp=userService.infoQuery(requestMap);
+        if(temp!=null&&temp.getmStatus()==1){
+            Map<String,Object> upMap=new HashMap<>();
+            upMap.put("account",temp.getmAccount());
+            upMap.put("password",temp.getmPassword());
+            upMap.put("gptnum",1);
+            try{
+                boolean upConfirm=userService.upgptnumber(upMap);
+                if(upConfirm){
+                    UserInfo resultClass=userService.infoQuery(requestMap);
+                    resultMap=CommonClass2Map("success",resultClass);
+                    System.out.println("update成功");
+                }else{
+                    System.out.println("update异常_更新失败");
+                    resultMap=CommonClass2Map("error",temp);
+                }
+            }catch (Exception e){
+                System.out.println("update异常:"+e.getMessage());
+                resultMap=CommonClass2Map("error",temp);
+            }
+        }else{
+            System.out.println("update异常_用户未登录");
+            resultMap=CommonClass2Map("error",temp);
+        }
+        return resultMap;
+    }
+
 
     /***
      * 返回公共类方法
