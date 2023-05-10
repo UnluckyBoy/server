@@ -50,7 +50,7 @@ public class GetInfoContro {
     private UserInfo mUser;
     //private List<UserInfo> mListUser;
     private static String PASSWORD_EncryKEY = "EncryptionKey_By-WuMing";//自定义密钥:EncryptionKey_By-WuMing
-    private static String mHandPath="/backserver/userImage/default.png";//默认头像地址
+    private static String mHandPath="default.png";//默认头像地址
 
     /**
      * 登录接口
