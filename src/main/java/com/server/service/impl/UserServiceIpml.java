@@ -49,4 +49,9 @@ public class UserServiceIpml implements UserService {
     public boolean fresh_status_logout(Map<String, Object> map) {
         return userMapper.fresh_status_logout(map);
     }
+
+    @Override
+    public boolean fresh_head(Map<String, Object> map) {
+        return userMapper.fresh_head(map);
+    }
 }

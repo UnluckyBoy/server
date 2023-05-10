@@ -154,4 +154,19 @@
             </if>
         </where>
     </update>
+
+    <!--更新头像-->
+    <update id="fresh_head" parameterType="java.util.HashMap">
+        update  server_user_info
+        <set >
+            <if test="head!=null">
+                uHead=#{head}
+            </if>
+        </set>
+        <where>
+            <if test="account!=null">
+                uAccount=#{account,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </update>
 </mapper>

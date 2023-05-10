@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 @ResponseBody
 @RequestMapping("/UserInfo")
 public class GetInfoContro {
+    private static String head_Path=System.getProperty("user.dir")+"/BackResource/backserver/userImage/";
 
     @Autowired
     private UserService userService;
@@ -305,6 +309,41 @@ public class GetInfoContro {
             }
         }else{
             System.out.println("update异常_用户未登录");
+            resultMap=CommonClass2Map("error",temp);
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/upHead")
+    public Map UpHead(@RequestParam("account") String account,@RequestParam("file") MultipartFile file){
+        Map<String,Object> resultMap=new HashMap();
+        Map<String,Object> requestMap=new HashMap<>();
+        //String filename = file.getOriginalFilename();//获取上传文件名
+        requestMap.put("account",account);
+        UserInfo temp=userService.infoQuery(requestMap);
+        if(temp!=null){
+            String filename=temp.getmName()+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            try {
+                //写入本地文件
+                file.transferTo(new File(head_Path+ filename));
+                System.out.println("上传成功"+filename);
+                requestMap.put("head",filename);
+                boolean upHead=userService.fresh_head(requestMap);
+                if(upHead){
+                    System.out.println("更新成功");
+                    UserInfo resultClass=userService.infoQuery(requestMap);
+                    resultMap=CommonClass2Map("success",resultClass);
+                    //resultMap.put("result","success");
+                }else{
+                    System.out.println("更新异常");
+                    resultMap=CommonClass2Map("error",temp);
+                    //resultMap.put("result","error");
+                }
+            } catch (IOException e) {
+                System.out.println("上传异常:"+e.getMessage());
+                resultMap=CommonClass2Map("error",temp);
+            }
+        }else{
             resultMap=CommonClass2Map("error",temp);
         }
         return resultMap;

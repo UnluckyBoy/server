@@ -35,7 +35,7 @@ public class CORSConfiguration extends WebMvcConfigurationSupport {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String dirPath=System.getProperty("user.dir")+"/BackResource/";
+        String dirPath=System.getProperty("user.dir")+"/BackResource/backserver/userImage/";
 
 //        //获取jar包所在目录
 //        ApplicationHome h = new ApplicationHome(getClass());
