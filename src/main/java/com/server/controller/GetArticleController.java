@@ -32,7 +32,7 @@ public class GetArticleController {
 
     @RequestMapping( "/get_all")
     public Map GetAll(){
-        List<ArticleInfo> articleList=new ArrayList<>();
+        List<Object> articleList=new ArrayList<>();
         Map<String,Object> resultMap=new HashMap<>();
         articleList=articleService.get_all();
         resultMap.put("articles",articleList);

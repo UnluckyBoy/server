@@ -23,8 +23,9 @@
                mDescription,
                mContent,
                mAuthor,
-               mHot
-        from server_article_info
+               mHot,
+               mType
+        from server_article_info limit 10
     </select>
 
     <!--获取全部信息-->
@@ -35,7 +36,8 @@
                mDescription,
                mContent,
                mAuthor,
-               mHot
+               mHot,
+               mType
         from server_article_info limit #{startIndex},#{endIndex}
     </select>
 </mapper>

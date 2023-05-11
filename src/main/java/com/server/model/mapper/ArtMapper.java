@@ -15,6 +15,6 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface ArtMapper{
-    public List<ArticleInfo> get_all();//查询所有
+    public List get_all();//查询所有
     public List<ArticleInfo> get_article_limit(Map<String,Object> map);//查询部分
 }

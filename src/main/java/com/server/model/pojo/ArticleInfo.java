@@ -15,8 +15,9 @@ public class ArticleInfo implements Serializable {
     private String mContent;
     private String mAuthor;
     private int mHot;
+    private int mType;
 
-    public ArticleInfo(int mId, String mTitle, String mCover, String mDescription, String mContent, String mAuthor, int mHot) {
+    public ArticleInfo(int mId, String mTitle, String mCover, String mDescription, String mContent, String mAuthor, int mHot, int mType) {
         this.mId = mId;
         this.mTitle = mTitle;
         this.mCover = mCover;
@@ -24,6 +25,7 @@ public class ArticleInfo implements Serializable {
         this.mContent = mContent;
         this.mAuthor = mAuthor;
         this.mHot = mHot;
+        this.mType = mType;
     }
 
     public int getmId() {
@@ -80,5 +82,13 @@ public class ArticleInfo implements Serializable {
 
     public void setmHot(int mHot) {
         this.mHot = mHot;
+    }
+
+    public int getmType() {
+        return mType;
+    }
+
+    public void setmType(int mType) {
+        this.mType = mType;
     }
 }

@@ -19,7 +19,7 @@ public class ArticleServiceIpml implements ArticleService {
     @Autowired
     private ArtMapper artMapper;
     @Override
-    public List<ArticleInfo> get_all() {
+    public List get_all() {
         return artMapper.get_all();
     }
 
