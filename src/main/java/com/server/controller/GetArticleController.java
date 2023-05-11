@@ -1,7 +1,7 @@
 package com.server.controller;
 
 import com.server.model.pojo.ArticleInfo;
-import com.server.service.BackService;
+import com.server.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,14 +27,14 @@ public class GetArticleController {
     private static String article_content_Path="content/";
 
     @Autowired
-    private BackService backService;
+    private ArticleService articleService;
 
 
     @RequestMapping( "/get_all")
     public Map GetAll(){
         List<ArticleInfo> articleList=new ArrayList<>();
         Map<String,Object> resultMap=new HashMap<>();
-        articleList=backService.get_all();
+        articleList=articleService.get_all();
         resultMap.put("articles",articleList);
         return resultMap;
     }

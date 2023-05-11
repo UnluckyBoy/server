@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.server.model.mapper.ArtMapper">
+<!--    &lt;!&ndash;文章信息Bean&ndash;&gt;-->
+<!--    <resultMap type="com.server.model.pojo.ArticleInfo" id="BaseInfoMap" autoMapping="true">-->
+<!--        <result property="mId" column="mId"/>-->
+<!--        <result property="mTitle" column="mTitle"/>-->
+<!--        <result property="mCover" column="mCover"/>-->
+<!--        <result property="mDescription" column="mDescription"/>-->
+<!--        <result property="mContent" column="mContent"/>-->
+<!--        <result property="mAuthor" column="mAuthor"/>-->
+<!--        <result property="mHot" column="mHot"/>-->
+<!--    </resultMap>-->
+
+    <!--文章内容处理逻辑-->
+    <!--获取全部信息-->
+    <select id="get_all" resultType="com.server.model.pojo.ArticleInfo">
+        select mId,
+               mTitle,
+               mCover,
+               mDescription,
+               mContent,
+               mAuthor,
+               mHot
+        from server_article_info
+    </select>
+
+    <!--获取全部信息-->
+    <select id="get_article_limit" parameterType="java.util.HashMap" resultType="com.server.model.pojo.ArticleInfo">
+        select mId,
+               mTitle,
+               mCover,
+               mDescription,
+               mContent,
+               mAuthor,
+               mHot
+        from server_article_info limit #{startIndex},#{endIndex}
+    </select>
+</mapper>

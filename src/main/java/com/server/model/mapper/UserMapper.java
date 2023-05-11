@@ -11,9 +11,9 @@ import java.util.Map;
 /**
  * Mapper接口
  */
-@Mapper //告诉springboot这是一个mybatis的mapper类
+@Mapper //mybatis的mapper类
 @Repository //将mapper交由spring容齐管理
-public interface ServerMapper {
+public interface UserMapper {
     public UserInfo infoQuery(Map<String,Object> map);//查询
     public UserInfo login(Map<String,Object> map);//登录
     public boolean register(Map<String,Object> map);//注册
@@ -23,5 +23,5 @@ public interface ServerMapper {
     public boolean fresh_status_logout(Map<String,Object> map);
     public boolean fresh_head(Map<String,Object> map);//更新头像
 
-    public List<ArticleInfo> get_all();//查询所有
+    //public List<ArticleInfo> get_all();//查询所有
 }

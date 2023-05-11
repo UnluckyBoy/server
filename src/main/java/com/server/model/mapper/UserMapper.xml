@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.server.model.mapper.ServerMapper">
+<mapper namespace="com.server.model.mapper.UserMapper">
 
     <!-- ***当数据库中的字段信息与Bean对象的属性不一致时需要通过resultMap来映射,防止异常-用户信息Bean*** -->
     <resultMap type="com.server.model.pojo.UserInfo" id="BaseInfoMap" autoMapping="true">
@@ -182,16 +182,16 @@
         </where>
     </update>
 
-    <!--文章内容处理逻辑-->
-    <!--获取全部信息-->
-    <select id="get_all" resultType="com.server.model.pojo.ArticleInfo">
-        select mId,
-               mTitle,
-               mCover,
-               mDescription,
-               mContent,
-               mAuthor,
-               mHot
-        from server_article_info
-    </select>
+<!--    &lt;!&ndash;文章内容处理逻辑&ndash;&gt;-->
+<!--    &lt;!&ndash;获取全部信息&ndash;&gt;-->
+<!--    <select id="get_all" resultType="com.server.model.pojo.ArticleInfo">-->
+<!--        select mId,-->
+<!--               mTitle,-->
+<!--               mCover,-->
+<!--               mDescription,-->
+<!--               mContent,-->
+<!--               mAuthor,-->
+<!--               mHot-->
+<!--        from server_article_info-->
+<!--    </select>-->
 </mapper>

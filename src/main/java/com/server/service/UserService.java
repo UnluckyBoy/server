@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public interface BackService {
+public interface UserService {
     public UserInfo infoQuery(Map<String,Object> map);;
     public UserInfo login(Map<String,Object> map);
     public boolean register(Map<String,Object> map);
@@ -17,5 +17,5 @@ public interface BackService {
     public boolean fresh_status_logout(Map<String,Object> map);//登出
     public boolean fresh_head(Map<String,Object> map);//更新头像
 
-    public List<ArticleInfo> get_all();//查询所有
+    //public List<ArticleInfo> get_all();//查询所有
 }
