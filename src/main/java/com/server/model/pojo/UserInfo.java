@@ -1,7 +1,5 @@
 package com.server.model.pojo;
 
-import org.springframework.stereotype.Repository;
-
 import java.io.Serializable;
 
 public class UserInfo implements Serializable {

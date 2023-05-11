@@ -33,7 +33,8 @@ import java.util.concurrent.TimeUnit;
 @ResponseBody
 @RequestMapping("/UserInfo")
 public class GetInfoContro {
-    private static String head_Path=System.getProperty("user.dir")+"/BackResource/backserver/userImage/";
+    private static String system_Path=System.getProperty("user.dir")+"/BackResource/backserver/";
+    private static String user_info_Path="userImage/";
 
     @Autowired
     private BackService backService;
@@ -46,7 +47,7 @@ public class GetInfoContro {
     private UserInfo mUser;
     //private List<UserInfo> mListUser;
     private static String PASSWORD_EncryKEY = "EncryptionKey_By-WuMing";//自定义密钥:EncryptionKey_By-WuMing
-    private static String mHandPath="userImage/default.png";//默认头像地址
+    private static String mHand="userImage/default.png";//默认头像地址
 
     /**
      * 登录接口
@@ -170,7 +171,7 @@ public class GetInfoContro {
         Map<String,Object> resultMap=new HashMap<>();
         Map<String,Object> requestMap=new HashMap<>();
 
-        requestMap.put("head",mHandPath);
+        requestMap.put("head",mHand);
         requestMap.put("name",name);
         requestMap.put("account",account);
         requestMap.put("sex","男");
@@ -321,9 +322,9 @@ public class GetInfoContro {
             String filename=temp.getmName()+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
             try {
                 //写入本地文件
-                file.transferTo(new File(head_Path+ filename));
+                file.transferTo(new File(system_Path+user_info_Path+filename));
                 System.out.println("上传成功"+filename);
-                requestMap.put("head",filename);
+                requestMap.put("head",user_info_Path+filename);
                 boolean upHead= backService.fresh_head(requestMap);
                 if(upHead){
                     System.out.println("更新成功");

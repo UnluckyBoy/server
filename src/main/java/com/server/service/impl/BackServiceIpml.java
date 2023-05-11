@@ -1,6 +1,7 @@
 package com.server.service.impl;
 
 import com.server.model.mapper.ServerMapper;
+import com.server.model.pojo.ArticleInfo;
 import com.server.model.pojo.UserInfo;
 import com.server.service.BackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,10 @@ public class BackServiceIpml implements BackService {
     @Override
     public boolean fresh_head(Map<String, Object> map) {
         return serverMapper.fresh_head(map);
+    }
+
+    @Override
+    public List<ArticleInfo> get_all() {
+        return serverMapper.get_all();
     }
 }
