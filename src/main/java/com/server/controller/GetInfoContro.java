@@ -1,17 +1,13 @@
 package com.server.controller;
 
-import com.server.backTool.CacheQuery;
 import com.server.backTool.IPUtils;
 import com.server.backTool.Pwd3DESUtil;
 import com.server.model.pojo.UserInfo;
-import com.server.service.UserService;
+import com.server.service.BackService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +36,7 @@ public class GetInfoContro {
     private static String head_Path=System.getProperty("user.dir")+"/BackResource/backserver/userImage/";
 
     @Autowired
-    private UserService userService;
+    private BackService backService;
 
     //在RedisConfig文件中配置了redisTemplate的序列化之后， 客户端也能正确显示键值对
     @Autowired
@@ -50,7 +46,7 @@ public class GetInfoContro {
     private UserInfo mUser;
     //private List<UserInfo> mListUser;
     private static String PASSWORD_EncryKEY = "EncryptionKey_By-WuMing";//自定义密钥:EncryptionKey_By-WuMing
-    private static String mHandPath="default.png";//默认头像地址
+    private static String mHandPath="userImage/default.png";//默认头像地址
 
     /**
      * 登录接口
@@ -98,7 +94,7 @@ public class GetInfoContro {
 //            }
 //        }
         try{
-            mUser=userService.login(requestMap);
+            mUser= backService.login(requestMap);
             if(mUser.getmStatus()!=0){
                 /*
                 if(mUser.getmAddressIp()!=currentIp){
@@ -107,7 +103,7 @@ public class GetInfoContro {
                 */
                 resultMap.put("result","login_lock");
             }else{
-                boolean login_status=userService.fresh_status_login(requestMap);
+                boolean login_status= backService.fresh_status_login(requestMap);
                 if(login_status){
                     resultMap=CommonClass2Map("success",mUser);
                 }else{
@@ -140,8 +136,8 @@ public class GetInfoContro {
         requestMap.put("password",mEncryPwd);
         requestMap.put("status",0);
         try{
-            if((userService.infoQuery(requestMap).getmStatus()==1)){
-                boolean logout=userService.fresh_status_logout(requestMap);
+            if((backService.infoQuery(requestMap).getmStatus()==1)){
+                boolean logout= backService.fresh_status_logout(requestMap);
                 if(logout){
                     resultMap.put("result","success");
                 }else{
@@ -183,12 +179,12 @@ public class GetInfoContro {
         requestMap.put("password",mEncryPwd);
 
         //若未存在，写入数据库返回Json
-        if((userService.infoQuery(requestMap)==null)){
-            boolean regKey=userService.register(requestMap);
+        if((backService.infoQuery(requestMap)==null)){
+            boolean regKey= backService.register(requestMap);
             if(regKey){
                 System.out.println("注册成功:"+regKey);
                 try{
-                    mUser=userService.infoQuery(requestMap);
+                    mUser= backService.infoQuery(requestMap);
                     resultMap=CommonClass2Map("success",mUser);
 
                     //System.out.println("__写入Key："+acount);
@@ -218,7 +214,7 @@ public class GetInfoContro {
         Map<String,Object> requestMap=new HashMap<>();
         requestMap.put("account",account);
         try{
-            mUser=userService.infoQuery(requestMap);
+            mUser= backService.infoQuery(requestMap);
             if(!(mUser.equals(null))){
                 //表示账户已注册
                 resultMap.put("id",mUser.getmId());
@@ -242,7 +238,7 @@ public class GetInfoContro {
 
     @RequestMapping("/fuzzyQuery/name")
     public List<UserInfo> FuzzyQuery(@RequestParam("name") String name){
-        List<UserInfo> mList=userService.fuzzyQuery(name);
+        List<UserInfo> mList= backService.fuzzyQuery(name);
         return mList;
     }
 
@@ -251,7 +247,7 @@ public class GetInfoContro {
         Map<String,Object> resultMap=new HashMap();
         Map<String,Object> requestMap=new HashMap<>();
         requestMap.put("account",account);
-        UserInfo temp=userService.infoQuery(requestMap);
+        UserInfo temp= backService.infoQuery(requestMap);
         if(temp!=null){
             Map<String,Object> upMap=new HashMap<>();
             upMap.put("account",temp.getmAccount());
@@ -259,9 +255,9 @@ public class GetInfoContro {
             upMap.put("gptnum",temp.getmGptNum()-1);
             if(temp.getmGptNum()>0){
                 try{
-                    boolean upConfirm=userService.upgptnumber(upMap);
+                    boolean upConfirm= backService.upgptnumber(upMap);
                     if(upConfirm){
-                        UserInfo resultClass=userService.infoQuery(requestMap);
+                        UserInfo resultClass= backService.infoQuery(requestMap);
                         System.out.println("有权限,update成功:");
                         resultMap=CommonClass2Map("Permission",resultClass);
                     }else{
@@ -287,16 +283,16 @@ public class GetInfoContro {
         Map<String,Object> resultMap=new HashMap();
         Map<String,Object> requestMap=new HashMap<>();
         requestMap.put("account",account);
-        UserInfo temp=userService.infoQuery(requestMap);
+        UserInfo temp= backService.infoQuery(requestMap);
         if(temp!=null&&temp.getmStatus()==1){
             Map<String,Object> upMap=new HashMap<>();
             upMap.put("account",temp.getmAccount());
             upMap.put("password",temp.getmPassword());
             upMap.put("gptnum",1);
             try{
-                boolean upConfirm=userService.upgptnumber(upMap);
+                boolean upConfirm= backService.upgptnumber(upMap);
                 if(upConfirm){
-                    UserInfo resultClass=userService.infoQuery(requestMap);
+                    UserInfo resultClass= backService.infoQuery(requestMap);
                     resultMap=CommonClass2Map("success",resultClass);
                     System.out.println("update成功");
                 }else{
@@ -320,7 +316,7 @@ public class GetInfoContro {
         Map<String,Object> requestMap=new HashMap<>();
         //String filename = file.getOriginalFilename();//获取上传文件名
         requestMap.put("account",account);
-        UserInfo temp=userService.infoQuery(requestMap);
+        UserInfo temp= backService.infoQuery(requestMap);
         if(temp!=null){
             String filename=temp.getmName()+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
             try {
@@ -328,10 +324,10 @@ public class GetInfoContro {
                 file.transferTo(new File(head_Path+ filename));
                 System.out.println("上传成功"+filename);
                 requestMap.put("head",filename);
-                boolean upHead=userService.fresh_head(requestMap);
+                boolean upHead= backService.fresh_head(requestMap);
                 if(upHead){
                     System.out.println("更新成功");
-                    UserInfo resultClass=userService.infoQuery(requestMap);
+                    UserInfo resultClass= backService.infoQuery(requestMap);
                     resultMap=CommonClass2Map("success",resultClass);
                     //resultMap.put("result","success");
                 }else{

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public interface UserService {
+public interface BackService {
     public UserInfo infoQuery(Map<String,Object> map);;
     public UserInfo login(Map<String,Object> map);
     public boolean register(Map<String,Object> map);

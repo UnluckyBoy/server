@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.server.model.mapper.UserMapper">
+<mapper namespace="com.server.model.mapper.ServerMapper">
 
     <!-- ***当数据库中的字段信息与Bean对象的属性不一致时需要通过resultMap来映射,防止异常*** -->
     <resultMap type="com.server.model.pojo.UserInfo" id="BaseInfoMap" autoMapping="true">
