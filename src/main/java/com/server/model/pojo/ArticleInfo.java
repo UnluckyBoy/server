@@ -17,19 +17,7 @@ public class ArticleInfo implements Serializable {
     private int mHot;
     private String mType;
     private int mFileType;
-
-    public ArticleInfo(int mId, String mTitle, String mCover, String mDescription, String mContent,
-                       String mAuthor, int mHot, String mType, int mFileType) {
-        this.mId = mId;
-        this.mTitle = mTitle;
-        this.mCover = mCover;
-        this.mDescription = mDescription;
-        this.mContent = mContent;
-        this.mAuthor = mAuthor;
-        this.mHot = mHot;
-        this.mType = mType;
-        this.mFileType = mFileType;
-    }
+    private String mCreateTime;
 
     public int getmId() {
         return mId;
@@ -101,5 +89,13 @@ public class ArticleInfo implements Serializable {
 
     public void setmFileType(int mFileType) {
         this.mFileType = mFileType;
+    }
+
+    public String getmCreateTime() {
+        return mCreateTime;
+    }
+
+    public void setmCreateTime(String mCreateTime) {
+        this.mCreateTime = mCreateTime;
     }
 }

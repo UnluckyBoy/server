@@ -94,6 +94,7 @@ public class GetArticleController {
         result.put("hot",temp.getmHot());
         result.put("type",temp.getmType());
         result.put("fileType",temp.getmFileType());
+        result.put("creatTime",temp.getmCreateTime());
 
         return result;
     }

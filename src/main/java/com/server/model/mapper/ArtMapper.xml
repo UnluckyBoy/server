@@ -25,7 +25,8 @@
                mAuthor,
                mHot,
                mType,
-               mFileType
+               mFileType,
+               DATE_FORMAT(mDate, "%Y-%m-%d %H:%i:%s") as mCreateTime
         from server_article_info limit 10
     </select>
 
@@ -39,7 +40,8 @@
                mAuthor,
                mHot,
                mType,
-               mFileType
+               mFileType,
+               DATE_FORMAT(mDate, "%Y-%m-%d %H:%i:%s") as mCreateTime
         from server_article_info limit #{startIndex},#{endIndex}
     </select>
 
@@ -52,7 +54,8 @@
                mAuthor,
                mHot,
                mType,
-               mFileType
+               mFileType,
+               DATE_FORMAT(mDate, "%Y-%m-%d %H:%i:%s") as mCreateTime
         from server_article_info
         <where>
             <if test="id!=0">
@@ -70,7 +73,8 @@
         mAuthor,
         mHot,
         mType,
-        mFileType
+        mFileType,
+        DATE_FORMAT(mDate, "%Y-%m-%d %H:%i:%s") as mCreateTime
         from server_article_info
         <where>
             <if test="title!=null">
