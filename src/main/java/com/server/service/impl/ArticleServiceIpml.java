@@ -27,4 +27,14 @@ public class ArticleServiceIpml implements ArticleService {
     public List<ArticleInfo> get_article_limit(Map<String, Object> map) {
         return artMapper.get_article_limit(map);
     }
+
+    @Override
+    public ArticleInfo query_id(int id) {
+        return artMapper.query_id(id);
+    }
+
+    @Override
+    public ArticleInfo get_file_content(Map<String, Object> map) {
+        return artMapper.get_file_content(map);
+    }
 }

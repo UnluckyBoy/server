@@ -21,5 +21,7 @@ https://4b301a04.r10.cpolar.top/UserInfo/doGptTrans?account=xxxxxxx
 https://4b301a04.r10.cpolar.top/UserInfo/upHead?account=xxxxxxx&file=xxxx(MultipartFile file)
 查询所有：
 http://localhost:8080/article/get_all
+获取内容:
+http://localhost:8080/article/get_file_content?title=xxxx&author=xxxxx
 
 

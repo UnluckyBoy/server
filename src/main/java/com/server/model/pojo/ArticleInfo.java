@@ -15,9 +15,11 @@ public class ArticleInfo implements Serializable {
     private String mContent;
     private String mAuthor;
     private int mHot;
-    private int mType;
+    private String mType;
+    private int mFileType;
 
-    public ArticleInfo(int mId, String mTitle, String mCover, String mDescription, String mContent, String mAuthor, int mHot, int mType) {
+    public ArticleInfo(int mId, String mTitle, String mCover, String mDescription, String mContent,
+                       String mAuthor, int mHot, String mType, int mFileType) {
         this.mId = mId;
         this.mTitle = mTitle;
         this.mCover = mCover;
@@ -26,6 +28,7 @@ public class ArticleInfo implements Serializable {
         this.mAuthor = mAuthor;
         this.mHot = mHot;
         this.mType = mType;
+        this.mFileType = mFileType;
     }
 
     public int getmId() {
@@ -84,11 +87,19 @@ public class ArticleInfo implements Serializable {
         this.mHot = mHot;
     }
 
-    public int getmType() {
+    public String getmType() {
         return mType;
     }
 
-    public void setmType(int mType) {
+    public void setmType(String mType) {
         this.mType = mType;
+    }
+
+    public int getmFileType() {
+        return mFileType;
+    }
+
+    public void setmFileType(int mFileType) {
+        this.mFileType = mFileType;
     }
 }

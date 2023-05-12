@@ -24,7 +24,8 @@
                mContent,
                mAuthor,
                mHot,
-               mType
+               mType,
+               mFileType
         from server_article_info limit 10
     </select>
 
@@ -37,7 +38,47 @@
                mContent,
                mAuthor,
                mHot,
-               mType
+               mType,
+               mFileType
         from server_article_info limit #{startIndex},#{endIndex}
+    </select>
+
+    <select id="query_id" parameterType="int" resultType="com.server.model.pojo.ArticleInfo">
+        select mId,
+               mTitle,
+               mCover,
+               mDescription,
+               mContent,
+               mAuthor,
+               mHot,
+               mType,
+               mFileType
+        from server_article_info
+        <where>
+            <if test="id!=0">
+                mId=#{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="get_file_content" parameterType="java.util.HashMap" resultType="com.server.model.pojo.ArticleInfo">
+        select mId,
+        mTitle,
+        mCover,
+        mDescription,
+        mContent,
+        mAuthor,
+        mHot,
+        mType,
+        mFileType
+        from server_article_info
+        <where>
+            <if test="title!=null">
+                mTitle=#{title}
+            </if>
+            <if test="author!=null">
+                and mAuthor=#{author}
+            </if>
+        </where>
     </select>
 </mapper>
