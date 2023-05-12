@@ -1,13 +1,19 @@
 package com.server.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.server.backTool.FileTool;
 import com.server.model.pojo.ArticleInfo;
 import com.server.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +29,7 @@ import java.util.Map;
 @RequestMapping("/article")
 public class GetArticleController {
     private static String system_Path=System.getProperty("user.dir")+"/BackResource/backserver/";
-    private static String article_info_Path="article/";
+    private static String article_root_Path="article/";
     private static String article_cover_Path="cover/";
     private static String article_content_Path="content/";
 
@@ -47,7 +53,7 @@ public class GetArticleController {
      * @return
      */
     @RequestMapping("get_file_content")
-    public Map GetContent(@RequestParam("title") String title,@RequestParam("author") String author){
+    public Map GetContent(@RequestParam("title") String title,@RequestParam("author") String author) {
         Map<String,Object> resultMap=new HashMap<>();
         Map<String,Object> requestMap=new HashMap<>();
         requestMap.put("title",title);
@@ -58,6 +64,8 @@ public class GetArticleController {
             switch (articleInfo.getmFileType()){
                 case 1:
                     System.out.println("文本");
+                    String temp=FileTool.ReadFile(system_Path+articleInfo.getmContent());
+                    System.out.println("文本内容:"+temp);
                     break;
                 case 5:
                     System.out.println("音频");
