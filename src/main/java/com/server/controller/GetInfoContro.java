@@ -315,6 +315,7 @@ public class GetInfoContro {
     public Map UpHead(@RequestParam("account") String account,@RequestParam("file") MultipartFile file){
         Map<String,Object> resultMap=new HashMap();
         Map<String,Object> requestMap=new HashMap<>();
+        System.out.println("传输的文件:"+file);
         //String filename = file.getOriginalFilename();//获取上传文件名
         requestMap.put("account",account);
         UserInfo temp= userService.infoQuery(requestMap);
