@@ -66,6 +66,7 @@ public class GetArticleController {
                     System.out.println("文本");
                     String temp=FileTool.ReadFile(system_Path+articleInfo.getmContent());
                     System.out.println("文本内容:"+temp);
+                    resultMap.put("article_content",temp);
                     break;
                 case 5:
                     System.out.println("音频");
@@ -74,7 +75,7 @@ public class GetArticleController {
                     System.out.println("视频");
                     break;
             }
-            resultMap=CommonResult(articleInfo);
+            //resultMap=CommonResult(articleInfo);
         }
 
         return resultMap;
