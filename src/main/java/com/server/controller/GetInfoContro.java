@@ -320,26 +320,38 @@ public class GetInfoContro {
         requestMap.put("account",account);
         UserInfo temp= userService.infoQuery(requestMap);
         if(temp!=null){
-            String filename=temp.getmName()+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
             try {
-                //写入本地文件
-                file.transferTo(new File(system_Path+user_info_Path+filename));
-                System.out.println("上传成功"+filename);
-                requestMap.put("head",user_info_Path+filename);
-                boolean upHead= userService.fresh_head(requestMap);
-                if(upHead){
-                    System.out.println("更新成功");
-                    UserInfo resultClass= userService.infoQuery(requestMap);
-                    resultMap=CommonClass2Map("success",resultClass);
-                    //resultMap.put("result","success");
-                }else{
-                    System.out.println("更新异常");
-                    resultMap=CommonClass2Map("error",temp);
-                    //resultMap.put("result","error");
+                File delete_File=new File(system_Path+temp.getmHead());
+                System.out.println("要删除的原文件:"+delete_File.getName());
+                if(delete_File.exists()){
+                    delete_File.delete();
+                    System.out.println("删除成功");
+
+                    String filename=temp.getmName()+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+                    try {
+                        //写入本地文件
+                        file.transferTo(new File(system_Path+user_info_Path+filename));
+                        System.out.println("上传成功"+filename);
+                        requestMap.put("head",user_info_Path+filename);
+                        boolean upHead= userService.fresh_head(requestMap);
+                        if(upHead){
+                            System.out.println("更新成功");
+                            UserInfo resultClass= userService.infoQuery(requestMap);
+                            resultMap=CommonClass2Map("success",resultClass);
+                            //resultMap.put("result","success");
+                        }else{
+                            System.out.println("更新异常");
+                            resultMap=CommonClass2Map("error",temp);
+                            //resultMap.put("result","error");
+                        }
+                    } catch (IOException e) {
+                        System.out.println("上传异常:"+e.getMessage());
+                        resultMap=CommonClass2Map("error",temp);
+                    }
                 }
-            } catch (IOException e) {
-                System.out.println("上传异常:"+e.getMessage());
-                resultMap=CommonClass2Map("error",temp);
+            } catch (Exception e) {
+                System.out.println("删除文件操作出错");
+                e.printStackTrace();
             }
         }else{
             resultMap=CommonClass2Map("error",temp);
