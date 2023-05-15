@@ -22,4 +22,14 @@ public class ImageFileIOTool {
             return false;
         }
     }
+
+    public static void deleteImage(String system_Path,String user_info_Path,String filename){
+        File delete_cache=new File(system_Path+user_info_Path+filename);
+        if(delete_cache.exists()){
+            delete_cache.delete();
+            System.out.println(TimeTool.GetTime(true)+"\t删除成功");
+        }else{
+            System.out.println(TimeTool.GetTime(true)+"\t删除异常");
+        }
+    }
 }

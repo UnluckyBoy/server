@@ -3,6 +3,7 @@ package com.server.controller;
 import com.server.backTool.IPUtils;
 import com.server.backTool.ImageFileIOTool;
 import com.server.backTool.Pwd3DESUtil;
+import com.server.backTool.TimeTool;
 import com.server.model.pojo.UserInfo;
 import com.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -321,7 +322,16 @@ public class GetInfoContro {
         requestMap.put("account",account);
         UserInfo temp= userService.infoQuery(requestMap);
         if(temp!=null){
-            String filename=temp.getmName()+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            String filename=temp.getmName()+file.getOriginalFilename()
+                    .substring(file.getOriginalFilename().lastIndexOf("."));
+            String origin_head=temp.getmHead();
+            String origin_head_name=origin_head.substring(10,origin_head.length());
+            System.out.println(TimeTool.GetTime(true)+"\t原有的文件名:"+origin_head_name);
+            if(!(filename.equals(origin_head_name))){
+                /**文件不同名,包括后缀名,删除**/
+                //System.out.println(TimeTool.GetTime(true)+"\t文件同名");
+                ImageFileIOTool.deleteImage(system_Path,user_info_Path,origin_head_name);
+            }
             boolean save=ImageFileIOTool.writeImage(system_Path,user_info_Path,filename,file);
             if(save){
                 requestMap.put("head",user_info_Path+filename);
@@ -338,6 +348,7 @@ public class GetInfoContro {
                 //文件写入失败
                 resultMap=CommonClass2Map("error",temp);
             }
+
         }else{
             resultMap=CommonClass2Map("error",temp);
         }
