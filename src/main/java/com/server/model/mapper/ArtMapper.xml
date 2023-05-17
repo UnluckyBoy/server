@@ -85,4 +85,8 @@
             </if>
         </where>
     </select>
+
+    <update id="up_Article_content" >
+
+    </update>
 </mapper>

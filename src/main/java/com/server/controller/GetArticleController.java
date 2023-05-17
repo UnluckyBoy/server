@@ -12,10 +12,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -40,6 +37,7 @@ public class GetArticleController {
     private static String article_root_Path="article/";
     private static String article_cover_Path="cover/";
     private static String article_content_Path="content/";
+    private static String default_cover="default.png";
 
     @Autowired
     private ArticleService articleService;
@@ -96,9 +94,18 @@ public class GetArticleController {
         return resultMap;
     }
 
-    @RequestMapping("/get_video")
+    @RequestMapping("/up_article_content")
+    public Map upArticleContent(@RequestBody String fileContent){
+        Map<String,Object> resultMap=new HashMap<>();
+        Map<String,Object> requestMap=new HashMap<>();
+
+        System.out.println(TimeTool.GetTime(true)+"\t获取的内容:"+fileContent);
+        return null;
+    }
+
+    @RequestMapping("/get_media")
     //@GetMapping(value = "/videoName",params ="/{videoName}")
-    public void streamVideo(HttpServletResponse response,String videoName) throws IOException {
+    public void streamVideo(HttpServletResponse response,@RequestParam("videoName")String videoName) throws IOException {
         String videoPath = system_Path+article_root_Path+article_content_Path+videoName; //根据视频文件名构建路径
         File vide_file=new File(videoPath);
         System.out.println(TimeTool.GetTime(true)+"\t获取的文件"+vide_file+"\n是否文件:"+vide_file.exists());
