@@ -2,18 +2,26 @@ package com.server.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.backTool.FileTool;
+import com.server.backTool.TimeTool;
 import com.server.model.pojo.ArticleInfo;
 import com.server.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +43,13 @@ public class GetArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    private ResourceLoader resourceLoader = null;
+
+    @Autowired
+    public GetArticleController(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
 
     @RequestMapping( "/get_all")
@@ -79,6 +94,27 @@ public class GetArticleController {
         }
 
         return resultMap;
+    }
+
+    @RequestMapping("/get_video")
+    //@GetMapping(value = "/videoName",params ="/{videoName}")
+    public void streamVideo(HttpServletResponse response,String videoName) throws IOException {
+        String videoPath = system_Path+article_root_Path+article_content_Path+videoName; //根据视频文件名构建路径
+        File vide_file=new File(videoPath);
+        System.out.println(TimeTool.GetTime(true)+"\t获取的文件"+vide_file+"\n是否文件:"+vide_file.exists());
+
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        InputStream inputStream = new FileInputStream(vide_file);
+        OutputStream outputStream = response.getOutputStream();
+
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+
+        outputStream.flush();
+        inputStream.close();
     }
 
     public Map CommonResult(ArticleInfo temp){
