@@ -1,0 +1,12 @@
+create table server_article_info(
+`mId` bigint(20)  not null auto_increment PRIMARY KEY comment '主键',
+`mTitle` varchar(255) comment'标题',
+`mCover` varchar(255) comment '封面',
+`mDescription` varchar(255) comment '描述',
+`mContent` varchar(25) comment '内容',
+`mAuthor` varchar(30) comment '作者',
+`mHot` bigint(60) DEFAULT 0 comment '热度',
+`mType` varchar(30) DEFAULT null comment '类型：趣闻，见识，实事...等',
+`mFileType` int(30) not null DEFAULT 1 comment '文件类型:1-文字，5-音频,9-视频',
+`mDate` datetime comment '上传时间'
+);

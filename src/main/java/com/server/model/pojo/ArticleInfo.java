@@ -98,4 +98,20 @@ public class ArticleInfo implements Serializable {
     public void setmCreateTime(String mCreateTime) {
         this.mCreateTime = mCreateTime;
     }
+
+    @Override
+    public String toString() {
+        return "ArticleInfo{" +
+                "mId=" + mId +
+                ", mTitle='" + mTitle + '\'' +
+                ", mCover='" + mCover + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mContent='" + mContent + '\'' +
+                ", mAuthor='" + mAuthor + '\'' +
+                ", mHot=" + mHot +
+                ", mType='" + mType + '\'' +
+                ", mFileType=" + mFileType +
+                ", mCreateTime='" + mCreateTime + '\'' +
+                '}';
+    }
 }

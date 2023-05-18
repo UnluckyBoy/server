@@ -86,7 +86,9 @@
         </where>
     </select>
 
-    <update id="up_Article_content" >
-
+    <update id="up_Article_content" parameterType="java.util.HashMap">
+        insert into server_article_info
+            (mTitle,mCover,mDescription,mContent,mAuthor,mHot,mType,mFileType,mDate)
+            values (#{title},#{cover},#{description},#{content},#{author},#{hot},#{type},#{filetype},#{date})
     </update>
 </mapper>

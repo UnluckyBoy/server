@@ -37,4 +37,9 @@ public class ArticleServiceIpml implements ArticleService {
     public ArticleInfo get_file_content(Map<String, Object> map) {
         return artMapper.get_file_content(map);
     }
+
+    @Override
+    public boolean up_Article_content(Map<String, Object> map) {
+        return artMapper.up_Article_content(map);
+    }
 }

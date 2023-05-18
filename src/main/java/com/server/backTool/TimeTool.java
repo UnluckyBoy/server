@@ -14,7 +14,7 @@ public class TimeTool {
         Date date =new Date(time);
         //转换提日期输出格式
         if(add_hour){
-            SimpleDateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            SimpleDateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String st = dateFormat.format(date);
             return st;
         }else{
