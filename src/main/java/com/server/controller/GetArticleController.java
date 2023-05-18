@@ -116,11 +116,15 @@ public class GetArticleController {
 //        String test2=Json2String(jsonObject,"title");
 //        System.out.println(test+test2);
         LocalDateTime createTime = LocalDateTime.parse(TimeTool.GetTime(true), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String content=Json2String(jsonObject,"content");
 
         requestMap.put("title",Json2String(jsonObject,"title"));
         requestMap.put("cover",article_root_Path+article_cover_Path+Json2String(jsonObject,"cover"));
         requestMap.put("description",Json2String(jsonObject,"description"));
-        requestMap.put("content",article_root_Path+article_content_Path+Json2String(jsonObject,"content"));
+
+        String add_articleName=article_root_Path+article_content_Path+Json2String(jsonObject,"author")+"_"
+                +Json2String(jsonObject,"title")+"_"+createTime.toString().replaceAll(":","-")+".txt";//Json2String(jsonObject,"content")
+        requestMap.put("content",add_articleName);
         requestMap.put("author",Json2String(jsonObject,"author"));
         requestMap.put("hot",0);
         requestMap.put("type",defaultType);
@@ -128,10 +132,17 @@ public class GetArticleController {
         requestMap.put("date",createTime);
 
         System.out.println(requestMap.toString());
+        String file=system_Path+add_articleName;
 
         boolean insert_key=articleService.up_Article_content(requestMap);
         if(insert_key){
-            resultMap.put("result","success");
+            boolean write=FileTool.WriteContent(file,content);
+            if(write){
+                resultMap.put("result","success");
+                System.out.println(TimeTool.GetTime(true)+"\t写入成功:"+file);
+            }else{
+                resultMap.put("result","error");
+            }
         }else{
             resultMap.put("result","error");
         }
