@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.server.backTool.FileTool;
+import com.server.backTool.ImageFileIOTool;
 import com.server.backTool.TimeTool;
 import com.server.model.pojo.ArticleInfo;
 import com.server.service.ArticleService;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -146,12 +148,25 @@ public class GetArticleController {
         }else{
             resultMap.put("result","error");
         }
+        return resultMap;
+    }
 
+    @RequestMapping("/article_image")
+    public Map upArticleImage(@RequestParam("files") List<MultipartFile> files){
+        Map<String,Object> resultMap=new HashMap<>();
+        for(int i=0;i<files.size();i++){
+            System.out.println("传输的文件:"+files.get(i).getOriginalFilename());
+        }
+        boolean save= ImageFileIOTool.writeImages(system_Path, article_root_Path+article_cover_Path,files);
+        if(save){
+            resultMap.put("result","success");
+        }else{
+            resultMap.put("result","error");
+        }
         return resultMap;
     }
 
     @RequestMapping("/media")
-    //@GetMapping(value = "/videoName",params ="/{videoName}")
     public void streamVideo(HttpServletResponse response,@RequestParam("mediaName")String mediaName) throws IOException {
         String videoPath = system_Path+article_root_Path+article_content_Path+mediaName; //根据视频文件名构建路径
         File vide_file=new File(videoPath);
