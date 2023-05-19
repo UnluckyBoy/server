@@ -37,7 +37,7 @@ public class CORSConfiguration extends WebMvcConfigurationSupport {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String dirPath=System.getProperty("user.dir")+"/BackResource/backserver/";
 
-//        //获取jar包所在目录
+        //获取jar包所在目录
 //        ApplicationHome h = new ApplicationHome(getClass());
 //        File jarF = h.getSource();
 //        //在jar包所在目录下生成一个upload文件夹用来存储上传的图片
