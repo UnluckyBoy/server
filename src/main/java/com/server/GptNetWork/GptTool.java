@@ -24,7 +24,7 @@ import java.util.Map;
 public class GptTool {
     //国内需要代理
     private static Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 1080));
-    private static String apiKey = "Bearer API_KEY";
+    private static String apiKey = "Bearer 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";
 
     public static String ChatApi(String content,String url){
 
